@@ -1,6 +1,8 @@
 #include <vector>
 #include <queue>
 
+#include "vector2.hpp"
+
 using namespace std;
 
 class World {
@@ -8,12 +10,14 @@ class World {
     //vector<Entity> entities;
     //queue<Entity> to_free;
     //queue<Entity> to_add;
-    
+
+    Vector2 world_size;
+
     public:
 
     static World &instance;
 
-    World();
+    World(Vector2 world_size);
 
 
     ~World();
@@ -26,7 +30,7 @@ class World {
     add
 
     */
-    
+
 
     void draw_world();
 
@@ -42,7 +46,7 @@ class World {
     // delete entity from entities
     //void entity_free(Entity entity);
 
-    // add entity to entities 
+    // add entity to entities
     //void entity_add(Entity entity);
 
 };
