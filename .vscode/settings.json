@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "random": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c",
+        "interface.h": "c",
+        "mapsmanagement.h": "c",
+        "map": "c",
+        "defines.h": "c",
+        "movehandler.h": "c"
+    }
+}
