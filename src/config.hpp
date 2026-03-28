@@ -3,3 +3,6 @@
 
 // defines percent of tiles occupied by given entity
 #define ENTITY_AMOUNT 3
+
+// percent
+#define PLANTS_SPREAD_CHANCE 20

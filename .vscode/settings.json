@@ -8,5 +8,6 @@
         "map": "c",
         "defines.h": "c",
         "movehandler.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

@@ -49,9 +49,10 @@ class World {
     void add_new_entity(Entity *entity);
 
 
+    private:
+
     void queue_to_next(Entity *entity);
 
-    private:
 
     void next_queue();
 

@@ -82,6 +82,7 @@ void World::add_new_entity(Entity *entity){
         delete entity;
     }
     else{
+        map->place_entity_at(entity->get_position(), entity);
         queue_to_next(entity);
     }
 }

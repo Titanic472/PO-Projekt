@@ -13,6 +13,11 @@ Entity* Map::get_entity_at(Vector2 position){
 }
 
 
+void Map::place_entity_at(Vector2 position, Entity* entity){
+    map[position.x][position.y] = entity;
+}
+
+
 bool Map::is_tile_occupied(Vector2 position) const{
     return map[position.x][position.y] != nullptr;
 }
@@ -22,7 +27,7 @@ Vector2 Map::get_possible_moves(Vector2 position, bool only_free_tiles) const{
     vector<Vector2> possible_moves = get_neighbours(position, only_free_tiles);
 
     if(possible_moves.empty())
-        return Vector2(0, 0);
+        return Vector2::ZERO;
     else
         return possible_moves[rand() % possible_moves.size()];
 }

@@ -10,6 +10,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 file(GLOB_RECURSE SOURCES
     "src/*.cpp"
+    "src/entities/*.cpp"
+    "src/entities/plants/*.cpp"
+    "src/entities/animals/*.cpp"
 )
 
 # Add all the source files (.cpp) and header files (.hpp) to the executable.
@@ -27,6 +30,13 @@ target_compile_options(main PRIVATE
 # 2. Add link options (needed for address sanitizer)
 target_link_options(main PRIVATE
     -fsanitize=address
+)
+
+target_include_directories(main PRIVATE
+    "src"
+    "src/entities"
+    "src/entities/plants"
+    "src/entities/animals"
 )
 
 # 3. Link libraries (ncursesw)

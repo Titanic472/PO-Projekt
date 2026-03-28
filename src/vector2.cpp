@@ -1,9 +1,17 @@
 #include "vector2.hpp"
 
 
+const Vector2 Vector2::ZERO(0, 0);
+
+
 Vector2::Vector2(int x, int y){
     this->x = x;
     this->y = y;
+}
+
+
+bool Vector2::operator!=(const Vector2& other){
+    return (this->x != other.x || this->y != other.y);
 }
 
 
