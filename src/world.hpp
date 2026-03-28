@@ -9,6 +9,18 @@
 #include "entity.hpp"
 #include "map.hpp"
 
+#include "grass.hpp"
+#include "milkweed.hpp"
+#include "guarana.hpp"
+#include "wolfberries.hpp"
+#include "sosnowskiHogweed.hpp"
+
+// #include "wolf.hpp"
+// #include "sheep.hpp"
+// #include "fox.hpp"
+// #include "turtle.hpp"
+// #include "antelope.hpp"
+
 using namespace std;
 
 class World {
@@ -31,7 +43,7 @@ class World {
     ~World();
 
 
-    // static Renderer* get_renderer();
+    static Renderer* get_renderer();
 
 
     static Map* get_map();
@@ -58,5 +70,9 @@ class World {
 
 
     void create_entities();
+
+
+    template<typename T>
+    void randomize_entities(int percent, int world_area);
 
 };

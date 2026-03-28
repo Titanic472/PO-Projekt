@@ -1,4 +1,6 @@
 #include "entity.hpp"
+#include "renderer.hpp"
+#include "world.hpp"
 
 
 Entity::Entity(int power, int initiative, Vector2 position, string name){
@@ -18,7 +20,7 @@ bool Entity::operator<(const Entity &other) const{
 
 
 void Entity::draw(){
-    Renderer::get_instance()->draw_char_at(this->position, this->name[0]);
+    World::get_renderer()->draw_char_at(this->position, this->name[0]);
 }
 
 
@@ -44,7 +46,7 @@ int Entity::get_initiative() const{
 
 void Entity::kill(){
     is_dead = true;
-    World::get_map()->remove_at(position);
+    World::get_map()->remove_entity_at(position);
 }
 
 
@@ -62,6 +64,6 @@ void Entity::collision(Entity *other_entity){
 
 
 void Entity::reproduce(){
-    Vector2 position = World::get_map()->get_possible_moves(position, true);
+    Vector2 position = World::get_map()->get_possible_moves(this->position, true);
     World::get_instance()->add_new_entity(clone(position));
 }

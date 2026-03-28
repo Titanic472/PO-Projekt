@@ -3,7 +3,7 @@
 class Grass : public Plant{
     public:
 
-    Grass(Vector2 position) : Plant(0, position, "grass"){}
+    Grass(Vector2 position) : Plant(0, position, "trawa:)"){}
 
 
     private:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include "entity.hpp"
@@ -23,10 +24,16 @@ class Map{
     void place_entity_at(Vector2 position, Entity* entity);
 
 
+    void remove_entity_at(Vector2 position);
+
+
     bool is_tile_occupied(Vector2 position) const;
 
 
     Vector2 get_possible_moves(Vector2 position, bool only_free_tiles = false) const;
+
+
+    vector<Entity*> get_entities_around(Vector2 position);
 
 
     void move(Vector2 from, Vector2 to);
@@ -34,5 +41,5 @@ class Map{
 
     private:
 
-    vector<Vector2> get_neighbours(Vector2 position, bool only_free_tiles = false) const;
+    vector<Vector2> get_neighbours(Vector2 position, bool only_free_tiles = false, bool only_occupied_tiles = false) const;
 };

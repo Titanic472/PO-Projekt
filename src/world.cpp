@@ -15,26 +15,27 @@ World::World(){
 
     instance = this;
 
-    // create_entities();
+    create_entities();
 }
 
 
 World::~World(){
+    delete map;
+    delete renderer;
+
+    cout << "exited with " << entities.size() << " entities\n";
     while (!entities.empty()){
         Entity *entity = entities.top();
         entities.pop();
 
         delete entity;
     }
-
-    delete map;
-    delete renderer;
 }
 
 
-// Renderer* World::get_renderer(){
-//     return World::instance->renderer;
-// }
+Renderer* World::get_renderer(){
+    return World::instance->renderer;
+}
 
 
 Map* World::get_map(){
@@ -48,6 +49,7 @@ World* World::get_instance(){
 
 
 void World::perform_turn(){
+    // cout << "turn!";
     while (!entities.empty()){
         Entity *entity = entities.top();
         entities.pop();
@@ -55,6 +57,7 @@ void World::perform_turn(){
         if (entity->is_alive()){
             entity->action();
         }
+        // cout << "next";
 
         queue_to_next(entity);
     }
@@ -74,6 +77,10 @@ void World::draw_world(){
 
         queue_to_next(entity);
     }
+
+    renderer->render();
+
+    next_queue();
 }
 
 
@@ -103,6 +110,26 @@ void World::next_queue(){
 }
 
 
-// void World::create_entities(){
+void World::create_entities(){
+    int world_area = world_size.x * world_size.y;
+    randomize_entities<Grass>(world_area, GRASS_AMOUNT);
+    randomize_entities<Milkweed>(world_area, MILKWEED_AMOUNT);
+    randomize_entities<Guarana>(world_area, GUARANA_AMOUNT);
+    randomize_entities<Wolfberries>(world_area, WOLFBERRIES_AMOUNT);
+    randomize_entities<SosnowskiHogweed>(world_area, SOSNOWSKI_HOGWEED_AMOUNT);
+    // randomize_entities<Wolf>(world_area, WOLF_AMOUNT);
+    // randomize_entities<Sheep>(world_area, SHEEP_AMOUNT);
+    // randomize_entities<Fox>(world_area, FOX_AMOUNT);
+    // randomize_entities<Turtle>(world_area, TURTLE_AMOUNT);
+    // randomize_entities<Antelope>(world_area, ANTELOPE_AMOUNT);
 
-// }
+    next_queue();
+}
+
+template<typename T>
+void World::randomize_entities(int world_area, int percent){
+    int amount = world_area * percent / 100;
+    for(int i = 0; i < amount; ++i){
+        add_new_entity(new T(Vector2(rand() % world_size.x, rand() % world_size.y)));
+    }
+}

@@ -1,4 +1,5 @@
 #include "renderer.hpp"
+#include "world.hpp"
 
 Renderer* Renderer::instance = nullptr;
 
@@ -22,7 +23,9 @@ Renderer::Renderer(Vector2 map_size){
 
     getmaxyx(stdscr, screen_size.y, screen_size.x);
 
-    screen_size = Vector2(screen_size.x / map_size.x * map_size.x + 1, screen_size.y / map_size.y * map_size.x + 1);
+    cell_size = Vector2(screen_size.x / map_size.x, screen_size.y / map_size.y);
+
+    screen_size = Vector2(cell_size.x * map_size.x + 1, cell_size.y * map_size.y + 1);
 
     createWindow(&main_window, screen_size.y, screen_size.x, 0, 0);
 
@@ -30,24 +33,22 @@ Renderer::Renderer(Vector2 map_size){
 
 // destroy curses
 Renderer::~Renderer(){
-
     endwin();
 }
 
 
-Renderer* Renderer::get_instance(){
-    return Renderer::instance;
+void Renderer::render(){
+    wrefresh(main_window);
 }
 
-
 void Renderer::draw_char_at(Vector2 position, char text) const{
-
+    Vector2 screen_position = Vector2(position.x * cell_size.x, position.y * cell_size.y);
+    screen_position += Vector2(cell_size.x / 2, cell_size.y / 2);
+    mvwprintw(main_window, screen_position.y, screen_position.x, "%c", text);
 }
 
 
 void Renderer::draw_map(Vector2 map_size){
-    Vector2 cell_size = Vector2(screen_size.x / map_size.x, screen_size.y / map_size.y);
-
     box(main_window, 0 , 0);
 
     for(int y = 1; y < screen_size.y - 1; ++y){
@@ -64,8 +65,6 @@ void Renderer::draw_map(Vector2 map_size){
         }
         mvwprintw(main_window, y, 1, "%s", line.c_str());
     }
-
-    wrefresh(main_window);
 }
 
 

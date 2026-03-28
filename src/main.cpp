@@ -16,7 +16,7 @@ int main() {
     char a = ' ';
     while(a != 'q'){
         cin >> a;
-        if (a == ' '){
+        if (a == 'n'){
             world->perform_turn();
             world->draw_world();
         }

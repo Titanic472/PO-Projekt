@@ -3,28 +3,26 @@
 #include <iostream>
 
 #include "vector2.hpp"
-#include "renderer.hpp"
-#include "world.hpp"
 
 using namespace std;
 
 class Entity{
-    int age = 0;
     bool is_dead;
     int power;
     int initiative;
+    string name;
 
     protected:
 
-    string name;
     Vector2 position;
+    int age = 0;
 
     public:
 
     Entity(int power, int initiative, Vector2 position, string name);
 
 
-    virtual ~Entity() = 0;
+    virtual ~Entity() = default;
 
 
     bool operator<(const Entity &other) const;
@@ -42,21 +40,21 @@ class Entity{
     bool is_alive();
 
 
-    protected:
-
-    virtual void reproduce();
+    void kill();
 
 
     void set_power(int power);
 
 
-    int get_initiative() const;
-
-
-    void kill();
-
-
     int get_power() const;
+
+
+    protected:
+
+    virtual void reproduce();
+
+
+    int get_initiative() const;
 
 
     virtual void collision(Entity *other_entity);

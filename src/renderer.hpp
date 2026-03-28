@@ -9,6 +9,7 @@ using namespace std;
 
 class Renderer{
     Vector2 screen_size;
+    Vector2 cell_size;
 
     WINDOW *main_window;
     static Renderer *instance;
@@ -22,7 +23,7 @@ class Renderer{
     ~Renderer();
 
 
-    static Renderer* get_instance();
+    void render();
 
 
     void draw_char_at(Vector2 position, char text) const;
@@ -33,5 +34,4 @@ class Renderer{
     private:
 
     void createWindow(WINDOW **win, int height, int width, int starty, int startx);
-
 };
