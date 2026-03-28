@@ -1,12 +1,13 @@
 #include "world.hpp"
 
+World* World::instance = nullptr;
 
 World::World(){
     //TODO change later, bad code
     world_size = Vector2(MAP_SIZE_X, MAP_SIZE_Y);
 
     this->map = new Map(world_size);
-    this->renderer = new Renderer();
+    this->renderer = new Renderer(world_size);
 
     if(instance == nullptr){
         delete instance;
@@ -31,13 +32,18 @@ World::~World(){
 }
 
 
-Renderer* World::get_renderer(){
-    return World::instance->renderer;
-}
+// Renderer* World::get_renderer(){
+//     return World::instance->renderer;
+// }
 
 
 Map* World::get_map(){
     return World::instance->map;
+}
+
+
+World* World::get_instance(){
+    return World::instance;
 }
 
 
@@ -58,7 +64,7 @@ void World::perform_turn(){
 
 
 void World::draw_world(){
-    renderer->draw_map(map);
+    renderer->draw_map(world_size);
 
     while (!entities.empty()){
         Entity *entity = entities.top();

@@ -1,19 +1,20 @@
+#pragma once
+
 #include <vector>
 
 #include "entity.hpp"
+#include "vector2.hpp"
 
+using namespace std;
 
 class Map{
-    Entity*** map;
+    vector<vector<Entity*>> map;
     Vector2 size;
 
     public:
 
     //full init
     Map(Vector2 map_size);
-
-
-    ~Map();
 
 
     Entity* get_entity_at(Vector2 position);

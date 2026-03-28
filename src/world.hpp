@@ -1,11 +1,11 @@
-#ifndef WORLD
-#define WORLD
+#pragma once
 
 #include <vector>
 #include <queue>
 
 #include "vector2.hpp"
 #include "config.hpp"
+#include "renderer.hpp"
 #include "entity.hpp"
 #include "map.hpp"
 
@@ -21,10 +21,9 @@ class World {
     Map *map;
     Renderer *renderer;
 
+    static World *instance;
 
     public:
-
-    static World *instance;
 
     World();
 
@@ -32,10 +31,13 @@ class World {
     ~World();
 
 
-    static Renderer* get_renderer();
+    // static Renderer* get_renderer();
 
 
     static Map* get_map();
+
+
+    static World* get_instance();
 
 
     void perform_turn();
@@ -57,5 +59,3 @@ class World {
     void create_entities();
 
 };
-
-#endif

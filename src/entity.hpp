@@ -1,8 +1,9 @@
+#pragma once
+
 #include <iostream>
 
 #include "vector2.hpp"
 #include "renderer.hpp"
-#include "world.hpp"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ class Entity{
     Entity(int power, int initiative, Vector2 position);
 
 
-    ~Entity(){}
+    virtual ~Entity() = 0;
 
 
     bool operator<(const Entity &other) const;
@@ -30,7 +31,7 @@ class Entity{
     virtual void action() = 0;
 
 
-    virtual void draw();
+    void draw();
 
 
     Vector2 get_position() const;
@@ -46,7 +47,7 @@ class Entity{
     int get_power() const;
 
 
-    int set_power(int power);
+    void set_power(int power);
 
 
     int get_initiative() const;

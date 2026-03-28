@@ -3,25 +3,8 @@
 
 Map::Map(Vector2 map_size){
     size = map_size;
-    map = new Entity**[size.x];
 
-    for(int x = 0; x < size.x; ++x){
-        map[x] = new Entity*[size.y];
-    }
-
-    for(int x = 0; x < size.x; ++x){
-        for(int y = 0; y < size.y; ++y){
-            map[x][y] = nullptr;
-        }
-    }
-}
-
-
-Map::~Map(){
-    for(int x = 0; x < size.x; ++x){
-        delete map[x];
-    }
-    delete map;
+    map.resize(size.x, std::vector<Entity*>(size.y, nullptr));
 }
 
 
@@ -35,7 +18,7 @@ bool Map::is_tile_occupied(Vector2 position) const{
 }
 
 
-Vector2 Map::get_possible_moves(Vector2 position, bool only_free_tiles = false) const{
+Vector2 Map::get_possible_moves(Vector2 position, bool only_free_tiles) const{
     vector<Vector2> possible_moves = get_neighbours(position, only_free_tiles);
 
     if(possible_moves.empty())
@@ -51,7 +34,7 @@ void Map::move(Vector2 from, Vector2 to){
 
 
 
-vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles = false) const{
+vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles) const{
     vector<Vector2> tiles;
 
     for(int x = position.x - 1; x <= position.x + 1; ++x){
@@ -66,7 +49,7 @@ vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles = fal
             )
                 continue;
 
-            if (only_free_tiles && map[x][y] == nullptr || !only_free_tiles)
+            if ((only_free_tiles && map[x][y] == nullptr) || !only_free_tiles)
                 tiles.push_back(Vector2(x, y));
         }
     }

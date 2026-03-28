@@ -14,7 +14,7 @@ bool Entity::operator<(const Entity &other) const{
 
 
 void Entity::draw(){
-    World::get_renderer()->draw_char_at(this->position, this->name[0]);
+    Renderer::get_instance()->draw_char_at(this->position, this->name[0]);
 }
 
 
@@ -28,7 +28,7 @@ int Entity::get_power() const{
 }
 
 
-int Entity::set_power(int power){
+void Entity::set_power(int power){
     this->power = power;
 }
 
