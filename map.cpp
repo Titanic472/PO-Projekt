@@ -25,6 +25,11 @@ Map::~Map(){
 }
 
 
+Entity* Map::get_entity_at(Vector2 position){
+    return map[position.x][position.y];
+}
+
+
 bool Map::is_tile_occupied(Vector2 position) const{
     return map[position.x][position.y] != nullptr;
 }

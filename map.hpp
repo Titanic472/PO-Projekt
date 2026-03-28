@@ -16,6 +16,9 @@ class Map{
     ~Map();
 
 
+    Entity* get_entity_at(Vector2 position);
+
+
     bool is_tile_occupied(Vector2 position) const;
 
 

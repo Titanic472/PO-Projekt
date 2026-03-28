@@ -14,7 +14,7 @@ World::World(){
 
     instance = this;
 
-    create_entities();
+    // create_entities();
 }
 
 

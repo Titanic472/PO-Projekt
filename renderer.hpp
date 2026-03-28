@@ -1,8 +1,10 @@
-// #include <ncurses.h>
+#include <ncurses.h>
+#include "vector2.hpp"
+#include "map.hpp"
 
 class Renderer{
+    Vector2 screen_size;
     public:
-    //TODO
 
     // init curses
     Renderer();
