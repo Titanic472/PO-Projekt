@@ -1,52 +1,61 @@
+#ifndef WORLD
+#define WORLD
+
 #include <vector>
 #include <queue>
 
 #include "vector2.hpp"
+#include "config.hpp"
+#include "entity.hpp"
+#include "map.hpp"
 
 using namespace std;
 
 class World {
 
-    //vector<Entity> entities;
-    //queue<Entity> to_free;
-    //queue<Entity> to_add;
+    priority_queue<Entity*> entities;
+    priority_queue<Entity*> next_turn_entities;
 
     Vector2 world_size;
 
+    Map *map;
+    Renderer *renderer;
+
+
     public:
 
-    static World &instance;
+    static World *instance;
 
-    World(Vector2 world_size);
+    World();
 
 
     ~World();
 
 
-    void perform_turn();
-    /* order:
-    entity actions (priority_queue)
-    free
-    add
+    static Renderer* get_renderer();
 
-    */
+
+    static Map* get_map();
+
+
+    void perform_turn();
 
 
     void draw_world();
 
 
-    // functions for entities:
+    void add_new_entity(Entity *entity);
 
-    //void queue_free(Entity entity);
 
-    //void queue_add(Entity entity);
+    void queue_to_next_turn(Entity *entity);
 
     private:
 
-    // delete entity from entities
-    //void entity_free(Entity entity);
+    void create_entities();
 
-    // add entity to entities
-    //void entity_add(Entity entity);
+
+    void prepare_next_turn();
 
 };
+
+#endif

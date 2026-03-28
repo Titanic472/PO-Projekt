@@ -1,36 +1,54 @@
+#include <iostream>
+
 #include "vector2.hpp"
+#include "renderer.hpp"
+#include "world.hpp"
+
+using namespace std;
 
 class Entity{
-    int id;
+    bool is_dead;
     int power;
     int initiative;
+
+    protected:
+
+    string name;
     Vector2 position;
 
     public:
 
-    Entity();
+    Entity(int power, int initiative, Vector2 position);
 
 
-    ~Entity();
+    ~Entity(){}
 
 
-    void action();
+    virtual void action() = 0;
 
 
-    void collision(Entity other_entity);
+    virtual void draw();
 
 
-    void draw();
+    Vector2 get_position() const;
 
 
-    int get_power();
+    bool is_alive();
+
+    protected:
+
+    virtual void collision(Entity &other_entity) = 0;
 
 
-    int set_power();
+    int get_power() const;
 
 
-    int get_initiative();
+    int set_power(int power);
+
+
+    int get_initiative() const;
 
 
     void kill();
+
 };
