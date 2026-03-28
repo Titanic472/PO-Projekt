@@ -49,7 +49,6 @@ World* World::get_instance(){
 
 
 void World::perform_turn(){
-    // cout << "turn!";
     while (!entities.empty()){
         Entity *entity = entities.top();
         entities.pop();
@@ -57,7 +56,6 @@ void World::perform_turn(){
         if (entity->is_alive()){
             entity->action();
         }
-        // cout << "next";
 
         queue_to_next(entity);
     }
@@ -117,8 +115,8 @@ void World::create_entities(){
     randomize_entities<Guarana>(world_area, GUARANA_AMOUNT);
     randomize_entities<Wolfberries>(world_area, WOLFBERRIES_AMOUNT);
     randomize_entities<SosnowskiHogweed>(world_area, SOSNOWSKI_HOGWEED_AMOUNT);
-    // randomize_entities<Wolf>(world_area, WOLF_AMOUNT);
-    // randomize_entities<Sheep>(world_area, SHEEP_AMOUNT);
+    randomize_entities<Wolf>(world_area, WOLF_AMOUNT);
+    randomize_entities<Sheep>(world_area, SHEEP_AMOUNT);
     // randomize_entities<Fox>(world_area, FOX_AMOUNT);
     // randomize_entities<Turtle>(world_area, TURTLE_AMOUNT);
     // randomize_entities<Antelope>(world_area, ANTELOPE_AMOUNT);

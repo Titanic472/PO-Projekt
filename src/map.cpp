@@ -28,13 +28,15 @@ bool Map::is_tile_occupied(Vector2 position) const{
 }
 
 
-Vector2 Map::get_possible_moves(Vector2 position, bool only_free_tiles) const{
+Vector2 Map::get_possible_move_direction(Vector2 position, bool only_free_tiles) const{
     vector<Vector2> possible_moves = get_neighbours(position, only_free_tiles);
 
     if(possible_moves.empty())
-        return position;
-    else
-        return possible_moves[rand() % possible_moves.size()];
+        return Vector2::ZERO;
+    else{
+        Vector2 move_position = possible_moves[rand() % possible_moves.size()];
+        return Vector2(move_position.x - position.x, move_position.y - position.y);
+    }
 }
 
 
@@ -46,7 +48,6 @@ vector<Entity*> Map::get_entities_around(Vector2 position){
     while(!possible_moves.empty()){
         Vector2 pos = possible_moves.back();
         possible_moves.pop_back();
-
         entities.push_back(map[pos.x][pos.y]);
     }
 
@@ -76,9 +77,9 @@ vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles, bool
             )
                 continue;
 
-            if ((
-                only_free_tiles && map[x][y] == nullptr)
-                || !only_free_tiles && !only_occupied_tiles
+            if (
+                (only_free_tiles && map[x][y] == nullptr)
+                || (!only_free_tiles && !only_occupied_tiles)
                 || (only_occupied_tiles && map[x][y] != nullptr)
             )
                 tiles.push_back(Vector2(x, y));

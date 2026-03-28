@@ -46,12 +46,12 @@ int Entity::get_initiative() const{
 
 void Entity::kill(){
     is_dead = true;
-    World::get_map()->remove_entity_at(position);
+    World::get_map()->remove_entity_at(this->position);
 }
 
 
 bool Entity::is_alive(){
-    return not this->is_dead;
+    return !this->is_dead;
 }
 
 
@@ -64,6 +64,6 @@ void Entity::collision(Entity *other_entity){
 
 
 void Entity::reproduce(){
-    Vector2 position = World::get_map()->get_possible_moves(this->position, true);
-    World::get_instance()->add_new_entity(clone(position));
+    Vector2 direction = World::get_map()->get_possible_move_direction(this->position, true);
+    World::get_instance()->add_new_entity(clone(this->position + direction));
 }

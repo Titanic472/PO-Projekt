@@ -1,5 +1,6 @@
 #include "sosnowskiHogweed.hpp"
 #include "world.hpp"
+#include "animal.hpp"
 
 
 Entity* SosnowskiHogweed::clone(Vector2 position){
@@ -18,8 +19,7 @@ void SosnowskiHogweed::action() {
 
     while(!entities.empty()){
         Entity* entity = entities.back();
-        // TODO change to animal
-        if(dynamic_cast<Plant*>(entity))
+        if(dynamic_cast<Animal*>(entity))
             entity->kill();
         entities.pop_back();
     }

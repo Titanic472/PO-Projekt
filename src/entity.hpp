@@ -7,7 +7,7 @@
 using namespace std;
 
 class Entity{
-    bool is_dead;
+    bool is_dead = false;
     int power;
     int initiative;
     string name;
@@ -49,15 +49,15 @@ class Entity{
     int get_power() const;
 
 
+    virtual void collision(Entity *other_entity);
+
+
     protected:
 
     virtual void reproduce();
 
 
     int get_initiative() const;
-
-
-    virtual void collision(Entity *other_entity);
 
 
     virtual Entity* clone(Vector2 position) = 0;

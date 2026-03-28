@@ -30,7 +30,7 @@ class Map{
     bool is_tile_occupied(Vector2 position) const;
 
 
-    Vector2 get_possible_moves(Vector2 position, bool only_free_tiles = false) const;
+    Vector2 get_possible_move_direction(Vector2 position, bool only_free_tiles = false) const;
 
 
     vector<Entity*> get_entities_around(Vector2 position);

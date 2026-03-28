@@ -15,8 +15,8 @@
 #include "wolfberries.hpp"
 #include "sosnowskiHogweed.hpp"
 
-// #include "wolf.hpp"
-// #include "sheep.hpp"
+#include "wolf.hpp"
+#include "sheep.hpp"
 // #include "fox.hpp"
 // #include "turtle.hpp"
 // #include "antelope.hpp"

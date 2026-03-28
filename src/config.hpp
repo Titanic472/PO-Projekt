@@ -15,4 +15,4 @@
 #define ANTELOPE_AMOUNT 2
 
 // percent
-#define PLANTS_SPREAD_CHANCE 20
+#define PLANTS_SPREAD_CHANCE 0

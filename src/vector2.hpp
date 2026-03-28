@@ -4,7 +4,7 @@ struct Vector2{
 	int x;
 	int y;
 
-    // static const Vector2 ZERO;
+    static const Vector2 ZERO;
 
     Vector2(int x, int y);
 
