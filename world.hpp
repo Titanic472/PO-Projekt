@@ -47,14 +47,14 @@ class World {
     void add_new_entity(Entity *entity);
 
 
-    void queue_to_next_turn(Entity *entity);
+    void queue_to_next(Entity *entity);
 
     private:
 
+    void next_queue();
+
+
     void create_entities();
-
-
-    void prepare_next_turn();
 
 };
 

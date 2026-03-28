@@ -2,6 +2,9 @@
 
 
 World::World(){
+    //TODO change later, bad code
+    world_size = Vector2(MAP_SIZE_X, MAP_SIZE_Y);
+
     this->map = new Map(world_size);
     this->renderer = new Renderer();
 
@@ -16,6 +19,13 @@ World::World(){
 
 
 World::~World(){
+    while (!entities.empty()){
+        Entity *entity = entities.top();
+        entities.pop();
+
+        delete entity;
+    }
+
     delete map;
     delete renderer;
 }
@@ -40,17 +50,24 @@ void World::perform_turn(){
             entity->action();
         }
 
-        queue_to_next_turn(entity);
+        queue_to_next(entity);
     }
 
-    prepare_next_turn();
+    next_queue();
 }
 
 
 void World::draw_world(){
-    renderer->draw_map();
+    renderer->draw_map(map);
 
+    while (!entities.empty()){
+        Entity *entity = entities.top();
+        entities.pop();
 
+        entity->draw();
+
+        queue_to_next(entity);
+    }
 }
 
 
@@ -59,12 +76,12 @@ void World::add_new_entity(Entity *entity){
         delete entity;
     }
     else{
-        queue_to_next_turn(entity);
+        queue_to_next(entity);
     }
 }
 
 
-void World::queue_to_next_turn(Entity *entity){
+void World::queue_to_next(Entity *entity){
     if(entity->is_alive()){
         next_turn_entities.push(entity);
     }
@@ -74,6 +91,11 @@ void World::queue_to_next_turn(Entity *entity){
 }
 
 
-void World::prepare_next_turn(){
+void World::next_queue(){
     entities = move(next_turn_entities);
 }
+
+
+// void World::create_entities(){
+
+// }

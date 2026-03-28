@@ -24,6 +24,9 @@ class Entity{
     ~Entity(){}
 
 
+    bool operator<(const Entity &other) const;
+
+
     virtual void action() = 0;
 
 

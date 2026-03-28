@@ -5,6 +5,7 @@
 
 class Map{
     Entity*** map;
+    Vector2 size;
 
     public:
 
@@ -18,13 +19,13 @@ class Map{
     bool is_tile_occupied(Vector2 position) const;
 
 
-    Vector2 get_tile_around(Vector2 position) const;
+    Vector2 get_possible_moves(Vector2 position, bool only_free_tiles = false) const;
 
 
-    Vector2 get_free_tile_around(Vector2 position) const;
+    void move(Vector2 from, Vector2 to);
 
 
     private:
 
-    vector<Vector2> get_neighbours(Vector2 position, bool only_free = false);
+    vector<Vector2> get_neighbours(Vector2 position, bool only_free_tiles = false) const;
 };

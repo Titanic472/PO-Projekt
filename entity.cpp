@@ -8,6 +8,11 @@ Entity::Entity(int power, int initiative, Vector2 position){
 }
 
 
+bool Entity::operator<(const Entity &other) const{
+    return this->initiative < other.initiative;
+}
+
+
 void Entity::draw(){
     World::get_renderer()->draw_char_at(this->position, this->name[0]);
 }
