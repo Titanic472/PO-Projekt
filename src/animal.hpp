@@ -14,5 +14,5 @@ class Animal : public Entity{
 
     protected:
 
-    void move(Vector2 move_direction);
+    virtual void move(Vector2 move_direction);
 };

@@ -117,8 +117,8 @@ void World::create_entities(){
     randomize_entities<SosnowskiHogweed>(world_area, SOSNOWSKI_HOGWEED_AMOUNT);
     randomize_entities<Wolf>(world_area, WOLF_AMOUNT);
     randomize_entities<Sheep>(world_area, SHEEP_AMOUNT);
-    // randomize_entities<Fox>(world_area, FOX_AMOUNT);
-    // randomize_entities<Turtle>(world_area, TURTLE_AMOUNT);
+    randomize_entities<Fox>(world_area, FOX_AMOUNT);
+    randomize_entities<Turtle>(world_area, TURTLE_AMOUNT);
     // randomize_entities<Antelope>(world_area, ANTELOPE_AMOUNT);
 
     next_queue();
