@@ -19,7 +19,7 @@
 #include "sheep.hpp"
 #include "fox.hpp"
 #include "turtle.hpp"
-// #include "antelope.hpp"
+#include "antelope.hpp"
 
 using namespace std;
 

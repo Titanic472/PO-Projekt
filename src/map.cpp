@@ -9,12 +9,15 @@ Map::Map(Vector2 map_size){
 
 
 Entity* Map::get_entity_at(Vector2 position){
+    if(is_tile_out_of_bounds(position))
+        return nullptr;
     return map[position.x][position.y];
 }
 
 
 void Map::remove_entity_at(Vector2 position){
-    map[position.x][position.y] = nullptr;
+    if(not is_tile_out_of_bounds(position))
+        map[position.x][position.y] = nullptr;
 }
 
 
@@ -24,7 +27,20 @@ void Map::place_entity_at(Vector2 position, Entity* entity){
 
 
 bool Map::is_tile_occupied(Vector2 position) const{
-    return map[position.x][position.y] != nullptr;
+    return (
+        not is_tile_out_of_bounds(position)
+        && map[position.x][position.y] != nullptr
+    );
+}
+
+
+bool Map::is_tile_out_of_bounds(Vector2 position) const{
+    return (
+        position.x < 0
+        || position.y < 0
+        || position.x >= size.x
+        || position.y >= size.y
+    );
 }
 
 
@@ -69,10 +85,7 @@ vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles, bool
         for(int y = position.y - 1; y <= position.y + 1; ++y){
 
             if (
-                x < 0
-                || y < 0
-                || x >= size.x
-                || y >= size.y
+                is_tile_out_of_bounds(Vector2(x, y))
                 || (position.x == x && position.y == y)
             )
                 continue;

@@ -30,6 +30,9 @@ class Map{
     bool is_tile_occupied(Vector2 position) const;
 
 
+    bool is_tile_out_of_bounds(Vector2 position) const;
+
+
     Vector2 get_possible_move_direction(Vector2 position, bool only_free_tiles = false) const;
 
 

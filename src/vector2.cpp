@@ -27,13 +27,13 @@ Vector2 Vector2::operator+(const Vector2& other){
 }
 
 
-Vector2& Vector2::operator*(const int scale){
-    x *= scale;
-    y *= scale;
-    return *this;
+Vector2 Vector2::operator*(const int scale){
+    return Vector2(this->x * scale, this->y * scale);
 }
 
 
-Vector2 Vector2::operator*=(const int scale){
-    return Vector2(this->x * scale, this->y * scale);
+Vector2& Vector2::operator*=(const int scale){
+    x *= scale;
+    y *= scale;
+    return *this;
 }
