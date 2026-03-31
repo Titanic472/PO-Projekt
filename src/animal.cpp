@@ -1,6 +1,13 @@
 #include "animal.hpp"
 #include "world.hpp"
 
+
+Animal::Animal(int power, int initiative, Vector2 position, string name, bool can_kill) :
+    Entity(power, initiative, position, name){
+    this->can_kill = can_kill;
+}
+
+
 void Animal::action(){
     Map* map = World::get_map();
     Vector2 move_direction = map->get_possible_move_direction(position);

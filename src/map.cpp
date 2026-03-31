@@ -44,6 +44,8 @@ bool Map::is_tile_out_of_bounds(Vector2 position) const{
 }
 
 
+// - change to version with move range as parameter
+// - nah, not optimal
 Vector2 Map::get_possible_move_direction(Vector2 position, bool only_free_tiles) const{
     vector<Vector2> possible_moves = get_neighbours(position, only_free_tiles);
 
@@ -76,28 +78,20 @@ void Map::move(Vector2 from, Vector2 to){
 }
 
 
-
 vector<Vector2> Map::get_neighbours(Vector2 position, bool only_free_tiles, bool only_occupied_tiles) const{
     vector<Vector2> tiles;
 
-
-    for(int x = position.x - 1; x <= position.x + 1; ++x){
-        for(int y = position.y - 1; y <= position.y + 1; ++y){
-
-            if (
-                is_tile_out_of_bounds(Vector2(x, y))
-                || (position.x == x && position.y == y)
-            )
-                continue;
-
-            if (
-                (only_free_tiles && map[x][y] == nullptr)
-                || (!only_free_tiles && !only_occupied_tiles)
-                || (only_occupied_tiles && map[x][y] != nullptr)
-            )
-                tiles.push_back(Vector2(x, y));
-
-        }
+    for(Vector2 direction : tile_neighbours){
+        Vector2 neighbour = Vector2(position + direction);
+        if (is_tile_out_of_bounds(neighbour))
+            continue;
+        
+        if (
+            (only_free_tiles && map[neighbour.x][neighbour.y] == nullptr)
+            || (!only_free_tiles && !only_occupied_tiles)
+            || (only_occupied_tiles && map[neighbour.x][neighbour.y] != nullptr)
+        )
+            tiles.push_back(neighbour);
     }
 
     return tiles;

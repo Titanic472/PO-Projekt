@@ -9,6 +9,11 @@
 using namespace std;
 
 class Map{
+    const Vector2 tile_neighbours[8] = {
+        Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
+        Vector2(-1, 0),                  Vector2(1, 0),
+        Vector2(-1, 1),  Vector2(0, 1),  Vector2(1, 1)
+    };
     vector<vector<Entity*>> map;
     Vector2 size;
 

@@ -84,9 +84,11 @@ void World::draw_world(){
 
 void World::add_new_entity(Entity *entity){
     if(map->is_tile_occupied(entity->get_position())){
+        // convert entity into kebap
         delete entity;
     }
     else{
+        // add entity to world
         map->place_entity_at(entity->get_position(), entity);
         queue_to_next(entity);
     }

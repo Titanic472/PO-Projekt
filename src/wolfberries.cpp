@@ -7,6 +7,6 @@ Entity* Wolfberries::clone(Vector2 position){
 
 
 void Wolfberries::collision(Entity *other_entity){
-    Entity::collision(other_entity);
+    other_entity->kill();
     this->kill();
 }
