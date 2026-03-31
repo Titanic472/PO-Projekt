@@ -24,7 +24,7 @@ void Antelope::collision(Entity *other_entity){
             if(this->run_away())
                 return;
         }
-        Entity::collision(other_entity);
+        Animal::collision(other_entity);
     }
 }
 
