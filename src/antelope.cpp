@@ -20,13 +20,9 @@ void Antelope::collision(Entity *other_entity){
         Entity::reproduce();
     }
     else {
-        //run away to nearby free tile with 50% chance to avoid confrontation
         if(rand() % 2 == 0){
-            Vector2 escape_direction = World::get_map()->get_possible_move_direction(this->position, true);
-            if(escape_direction != Vector2::ZERO){
-                Animal::move(escape_direction);
+            if(this->run_away())
                 return;
-            }
         }
         Entity::collision(other_entity);
     }

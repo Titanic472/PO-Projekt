@@ -24,5 +24,5 @@ void Fox::collision(Entity *other_entity){
         Entity::reproduce();
     }
     else
-        Entity::collision(other_entity);
+        Animal::collision(other_entity);
 }

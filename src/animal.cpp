@@ -17,6 +17,25 @@ void Animal::action(){
 }
 
 
+void Animal::collision(Entity *other_entity) {
+    if(dynamic_cast<Animal*>(other_entity)){
+        Animal* enemy = dynamic_cast<Animal*>(other_entity);
+        if(this->get_power() <= enemy->get_power() && not enemy->is_predator()){
+            this->run_away();
+            return;
+        }
+        else if(this->get_power() > enemy->get_power() && not this->is_predator())
+            return;
+    }
+    Entity::collision(other_entity);
+}
+
+
+bool Animal::is_predator(){
+    return this->can_kill;
+}
+
+
 void Animal::move(Vector2 move_direction){
     Map* map = World::get_map();
     Entity* collision_target = map->get_entity_at(position + move_direction);
@@ -33,4 +52,15 @@ void Animal::move(Vector2 move_direction){
         map->move(position, position + move_direction);
         position += move_direction;
     }
+}
+
+
+bool Animal::run_away(){
+    Vector2 direction = World::get_map()->get_possible_move_direction(this->position, true);
+    if(direction != Vector2::ZERO){
+        this->move(direction);
+        return true;
+    }
+    else
+        return false;
 }

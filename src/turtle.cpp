@@ -12,7 +12,7 @@ void Turtle::collision(Entity *other_entity){
     }
     // ignore attacks from entites with less than 5 power
     else if(other_entity->get_power() >= 5)
-        Entity::collision(other_entity);
+        Animal::collision(other_entity);
 }
 
 

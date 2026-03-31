@@ -15,7 +15,16 @@ class Animal : public Entity{
     virtual void action() override;
 
 
+    virtual void collision(Entity *other_entity) override;
+
+
+    bool is_predator();
+
+
     protected:
 
     virtual void move(Vector2 move_direction);
+    
+
+    bool run_away();
 };
