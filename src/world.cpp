@@ -45,6 +45,11 @@ Map* World::get_map(){
 }
 
 
+InputManager* World::get_input_manager(){
+    return World::instance->input_manager;
+}
+
+
 World* World::get_instance(){
     return World::instance;
 }

@@ -51,6 +51,9 @@ class World {
     static Map* get_map();
 
 
+    static InputManager* get_input_manager();
+
+
     static World* get_instance();
 
 

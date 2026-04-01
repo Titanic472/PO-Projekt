@@ -24,3 +24,4 @@
 #define RIGHT 'd'
 #define UP   'w'
 #define DOWN 's'
+#define ABILITY 'e'
