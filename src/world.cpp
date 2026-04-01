@@ -8,6 +8,7 @@ World::World(){
 
     this->map = new Map(world_size);
     this->renderer = new Renderer(world_size);
+    this->input_manager = new InputManager();
 
     if(instance == nullptr){
         delete instance;
@@ -22,6 +23,7 @@ World::World(){
 World::~World(){
     delete map;
     delete renderer;
+    delete input_manager;
 
     cout << "exited with " << entities.size() << " entities\n";
     while (!entities.empty()){
@@ -48,7 +50,12 @@ World* World::get_instance(){
 }
 
 
-void World::perform_turn(){
+bool World::perform_turn(){
+    input_manager->read_next_input();
+
+    if(input_manager->is_quit_pressed())
+        return false;
+
     while (!entities.empty()){
         Entity *entity = entities.top();
         entities.pop();
@@ -61,6 +68,7 @@ void World::perform_turn(){
     }
 
     next_queue();
+    return true;
 }
 
 
@@ -75,6 +83,8 @@ void World::draw_world(){
 
         queue_to_next(entity);
     }
+
+    // cout << input_manager->get_last_input();
 
     renderer->render();
 

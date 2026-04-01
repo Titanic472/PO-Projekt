@@ -8,6 +8,7 @@
 #include "renderer.hpp"
 #include "entity.hpp"
 #include "map.hpp"
+#include "inputManager.hpp"
 
 #include "grass.hpp"
 #include "milkweed.hpp"
@@ -32,6 +33,7 @@ class World {
 
     Map *map;
     Renderer *renderer;
+    InputManager *input_manager;
 
     static World *instance;
 
@@ -52,7 +54,8 @@ class World {
     static World* get_instance();
 
 
-    void perform_turn();
+    // returns if turn was performed successfully and application should continue executing
+    bool perform_turn();
 
 
     void draw_world();

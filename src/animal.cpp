@@ -24,8 +24,8 @@ void Animal::collision(Entity *other_entity) {
             this->run_away();
             return;
         }
-        else if(this->get_power() > enemy->get_power() && not this->is_predator())
-            return;
+        // else if(this->get_power() > enemy->get_power() && not this->is_predator())
+        //     return;
     }
     Entity::collision(other_entity);
 }

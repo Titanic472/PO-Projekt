@@ -21,6 +21,8 @@ Renderer::Renderer(Vector2 map_size){
 
     curs_set(FALSE);
 
+    keypad(stdscr, TRUE);
+
     getmaxyx(stdscr, screen_size.y, screen_size.x);
 
     cell_size = Vector2(screen_size.x / map_size.x, screen_size.y / map_size.y);
