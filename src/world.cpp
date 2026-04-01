@@ -127,6 +127,8 @@ void World::next_queue(){
 
 void World::create_entities(){
     int world_area = world_size.x * world_size.y;
+    add_new_entity(new Human(world_size * 0.5));
+
     randomize_entities<Grass>(world_area, GRASS_AMOUNT);
     randomize_entities<Milkweed>(world_area, MILKWEED_AMOUNT);
     randomize_entities<Guarana>(world_area, GUARANA_AMOUNT);

@@ -22,6 +22,8 @@
 #include "turtle.hpp"
 #include "antelope.hpp"
 
+#include "human.hpp"
+
 using namespace std;
 
 class World {

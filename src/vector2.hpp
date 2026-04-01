@@ -21,7 +21,7 @@ struct Vector2{
     Vector2& operator+=(const Vector2& other);
 
 
-    Vector2 operator*(const int scale);
+    Vector2 operator*(const float scale);
 
 
     Vector2& operator*=(const int scale);

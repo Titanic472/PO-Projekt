@@ -27,7 +27,7 @@ Vector2 Vector2::operator+(const Vector2& other){
 }
 
 
-Vector2 Vector2::operator*(const int scale){
+Vector2 Vector2::operator*(const float scale){
     return Vector2(this->x * scale, this->y * scale);
 }
 
