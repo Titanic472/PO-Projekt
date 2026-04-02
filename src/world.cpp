@@ -89,7 +89,7 @@ void World::draw_world(){
         queue_to_next(entity);
     }
 
-    // cout << input_manager->get_last_input();
+    // cout << input_manager->get_last_input() << " ";
 
     renderer->render();
 

@@ -3,7 +3,17 @@
 
 void InputManager::read_next_input(){
     // last_input = getch();
-    cin >> last_input;
+    char input;
+    cin >> input;
+    if(input == 27){
+        cin >> input;
+        if(input == 79){
+            cin >> input;
+            last_input = input + 255;
+            return;
+        }
+    }
+    last_input = input;
 }
 
 

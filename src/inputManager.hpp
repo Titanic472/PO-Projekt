@@ -6,7 +6,7 @@
 using namespace std;
 
 class InputManager{
-    char last_input = ' ';
+    int last_input = ' ';
 
     public:
 

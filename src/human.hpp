@@ -17,6 +17,9 @@ class Human : public Animal{
     void action() override;
 
 
+    void kill() override;
+
+
     void collision(Entity *other_entity) override;
 
 

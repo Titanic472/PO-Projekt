@@ -62,12 +62,18 @@ void Human::collision(Entity *other_entity){
         ability_cooldown = 11;
 
     if(ability_cooldown > 5){
-        if(other_entity->get_power() >= this->get_power()){
+        if(other_entity->get_power() >= this->get_power())
             this->run_away();
-        }
         return;
     }
 
     Animal::collision(other_entity);
 
+}
+
+
+void Human::kill(){
+    if(ability_cooldown > 5)
+        return;
+    Entity::kill();
 }

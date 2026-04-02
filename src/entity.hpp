@@ -40,7 +40,7 @@ class Entity{
     bool is_alive();
 
 
-    void kill();
+    virtual void kill();
 
 
     void set_power(int power);
