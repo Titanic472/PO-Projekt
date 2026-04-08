@@ -2,7 +2,6 @@
 
 
 void InputManager::read_next_input(){
-    // last_input = getch();
     char input;
     cin >> input;
     if(input == 27){

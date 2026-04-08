@@ -3,14 +3,14 @@
 World* World::instance = nullptr;
 
 World::World(){
-    //TODO change later, bad code
+    // TODO change later, bad code
     world_size = Vector2(MAP_SIZE_X, MAP_SIZE_Y);
 
     this->map = new Map(world_size);
     this->renderer = new Renderer(world_size);
     this->input_manager = new InputManager();
 
-    if(instance == nullptr){
+    if(instance != nullptr){
         delete instance;
     }
 
@@ -56,6 +56,7 @@ World* World::get_instance(){
 
 
 bool World::perform_turn(){
+    // add check to perform turn only when new turn button is pressed
     input_manager->read_next_input();
 
     if(input_manager->is_quit_pressed())
@@ -88,6 +89,8 @@ void World::draw_world(){
 
         queue_to_next(entity);
     }
+
+    renderer->draw_info_window();
 
     // cout << input_manager->get_last_input() << " ";
 

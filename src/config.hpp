@@ -5,17 +5,17 @@
 #define GRASS_AMOUNT 10
 #define MILKWEED_AMOUNT 8
 #define GUARANA_AMOUNT 10
-#define WOLFBERRIES_AMOUNT 0
+#define WOLFBERRIES_AMOUNT 2
 #define SOSNOWSKI_HOGWEED_AMOUNT 0
 
-#define WOLF_AMOUNT 10
-#define SHEEP_AMOUNT 0
-#define FOX_AMOUNT 0
-#define TURTLE_AMOUNT 0
-#define ANTELOPE_AMOUNT 0
+#define WOLF_AMOUNT 2
+#define SHEEP_AMOUNT 5
+#define FOX_AMOUNT 5
+#define TURTLE_AMOUNT 5
+#define ANTELOPE_AMOUNT 5
 
 // percent
-#define PLANTS_SPREAD_CHANCE 10
+#define PLANTS_SPREAD_CHANCE 5
 
 
 // action keybinds
@@ -26,3 +26,6 @@
 #define UP   255 + 65
 #define DOWN 255 + 66
 #define ABILITY 'e'
+
+
+#define STATUS_WIDTH 20

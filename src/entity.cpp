@@ -56,16 +56,24 @@ bool Entity::is_alive(){
 
 
 void Entity::collision(Entity *other_entity){
-    if(this->power <= other_entity->get_power())
+    if(this->power <= other_entity->get_power()){
+        World::get_renderer()->add_to_log(this->name + " collided with " + other_entity->name + " and died");
         this->kill();
-    else
+    }
+    else{
+        World::get_renderer()->add_to_log(this->name + " collided with " + other_entity->name + " and won");
         other_entity->kill();
+    }
+        
 }
 
 
 void Entity::reproduce(){
     Vector2 direction = World::get_map()->get_possible_move_direction(this->position, true);
-    // more optimisation for big map sizes (optional)
-    // if(not World::get_map()->is_tile_occupied(this->position + direction))
-    World::get_instance()->add_new_entity(clone(this->position + direction));
+
+    if(not World::get_map()->is_tile_occupied(this->position + direction)){
+        World::get_renderer()->add_to_log(this->name + " reproduced");
+        World::get_instance()->add_new_entity(clone(this->position + direction));
+    }
+    
 }
