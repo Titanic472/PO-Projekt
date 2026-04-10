@@ -61,7 +61,7 @@ class World {
     static World* get_instance();
 
 
-    static Human* get_human();
+    static Human** get_human();
 
 
     static int get_entitity_count();

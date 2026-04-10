@@ -55,8 +55,8 @@ World* World::get_instance(){
 }
 
 
-Human* World::get_human(){
-    return World::instance->human;
+Human** World::get_human(){
+    return &World::instance->human;
 }
 
 

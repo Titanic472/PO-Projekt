@@ -104,7 +104,7 @@ void Renderer::draw_info_window(){
     y++; // empty line
 
     // Ability cooldown section
-    Human* human = World::get_human();
+    Human* human = *(World::get_human());
     string cd_text = "";
     if(human != nullptr){
         cd_text = "ability cooldown: ";
