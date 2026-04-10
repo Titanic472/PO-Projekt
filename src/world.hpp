@@ -9,6 +9,7 @@
 #include "entity.hpp"
 #include "map.hpp"
 #include "inputManager.hpp"
+#include "saveParser.hpp"
 
 #include "grass.hpp"
 #include "milkweed.hpp"
@@ -28,8 +29,9 @@ using namespace std;
 
 class World {
 
-    priority_queue<Entity*> entities;
-    priority_queue<Entity*> next_turn_entities;
+    Human *human;
+    priority_queue<Entity*, vector<Entity*>, CompareEntityPtr> entities;
+    priority_queue<Entity*, vector<Entity*>, CompareEntityPtr> next_turn_entities;
 
     Vector2 world_size;
 
@@ -59,6 +61,12 @@ class World {
     static World* get_instance();
 
 
+    static Human* get_human();
+
+
+    static int get_entitity_count();
+
+
     // returns if turn was performed successfully and application should continue executing
     bool perform_turn();
 
@@ -70,6 +78,12 @@ class World {
 
 
     private:
+
+    void save();
+
+
+    void load();
+
 
     void queue_to_next(Entity *entity);
 

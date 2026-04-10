@@ -3,7 +3,7 @@
 class Turtle : public Animal{
     public:
 
-    Turtle(Vector2 position) : Animal(2, 1, position, "Turtle"){}
+    Turtle(Vector2 position) : Animal(2, 1, position, "Turtle", "Turtle") {}
 
 
     void collision(Entity *other_entity) override;

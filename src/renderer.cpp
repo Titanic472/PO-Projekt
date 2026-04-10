@@ -80,7 +80,7 @@ void Renderer::create_window(WINDOW **win, int height, int width, int starty, in
 
 void Renderer::add_to_log(string text){
     // limit log size to match window height
-    if(log_messages.size() > (unsigned int)screen_size.y){ 
+    if(log_messages.size() > (unsigned int)screen_size.y){
         return;
     }
     log_messages.push_back(text);
@@ -97,20 +97,29 @@ void Renderer::draw_info_window(){
     int y = 1;
 
     // Button pressed section
-    string btn_text = "button pressed: ";
-    btn_text += convert_input_to_text(World::get_instance()->get_input_manager()->get_last_input());
+    string btn_text = "next action: ";
+    btn_text += convert_input_to_text(World::get_input_manager()->get_last_input());
     mvwprintw(info_window, y++, 1, "%s", btn_text.substr(0, max_width).c_str());
-    
+
     y++; // empty line
 
     // Ability cooldown section
-    string cd_text = "ability cooldown: <int>";
+    Human* human = World::get_human();
+    string cd_text = "";
+    if(human != nullptr){
+        cd_text = "ability cooldown: ";
+        cd_text += to_string(human->get_ability_cooldown());
+    }
+    else{
+        cd_text = "Human died :(";
+    }
     mvwprintw(info_window, y++, 1, "%s", cd_text.substr(0, max_width).c_str());
-    
+
     y++; // empty line
 
     // entities count section
-    string entities_text = "entities: <int>";
+    string entities_text = "entities: ";
+    entities_text += to_string(World::get_instance()->get_entitity_count());
     mvwprintw(info_window, y++, 1, "%s", entities_text.substr(0, max_width).c_str());
 
     y++; // empty line

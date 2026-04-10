@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+
+using namespace std;
+
 struct Vector2{
 	int x;
 	int y;
@@ -10,6 +14,12 @@ struct Vector2{
 
 
     Vector2(){}
+
+
+    Vector2(string str);
+
+
+    string to_string() const;
 
 
     bool operator!=(const Vector2& other);

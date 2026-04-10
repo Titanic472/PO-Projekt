@@ -1,7 +1,4 @@
 #pragma once
-// no co, typowy uczeń kierunku humanistycznego
-// jak się znudzi to zamiast się poruszać zacznie lekturę czytać
-
 
 #include "animal.hpp"
 #include "config.hpp"
@@ -13,6 +10,7 @@ class Human : public Animal{
 
     Human(Vector2 position, int ability_cooldown = 0);
 
+    ~Human();
 
     void action() override;
 
@@ -21,6 +19,12 @@ class Human : public Animal{
 
 
     void collision(Entity *other_entity) override;
+
+
+    int get_ability_cooldown() const;
+
+
+    string save_as_string() const override;
 
 
     private:

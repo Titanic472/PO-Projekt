@@ -2,8 +2,8 @@
 #include "world.hpp"
 
 
-Animal::Animal(int power, int initiative, Vector2 position, string name, bool can_kill) :
-    Entity(power, initiative, position, name){
+Animal::Animal(int power, int initiative, Vector2 position, string name, string datatype, bool can_kill) :
+    Entity(power, initiative, position, name, datatype){
     this->can_kill = can_kill;
 }
 

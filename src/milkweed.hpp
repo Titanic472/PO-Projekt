@@ -3,7 +3,7 @@
 class Milkweed : public Plant{
     public:
 
-    Milkweed(Vector2 position) : Plant(0, position, "milkweed"){}
+    Milkweed(Vector2 position) : Plant(0, position, "milkweed", "Milkweed") {}
 
 
     void action() override;

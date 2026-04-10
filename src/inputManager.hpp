@@ -19,6 +19,9 @@ class InputManager{
     int get_last_input() const;
 
 
+    void clear_last_input();
+
+
     bool is_quit_pressed() const;
 
 

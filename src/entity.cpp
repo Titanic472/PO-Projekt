@@ -3,11 +3,12 @@
 #include "world.hpp"
 
 
-Entity::Entity(int power, int initiative, Vector2 position, string name){
+Entity::Entity(int power, int initiative, Vector2 position, string name, string datatype){
     this->power = power;
     this->initiative = initiative;
     this->position = position;
     this->name = name;
+    this->datatype = datatype;
 }
 
 
@@ -64,7 +65,19 @@ void Entity::collision(Entity *other_entity){
         World::get_renderer()->add_to_log(this->name + " collided with " + other_entity->name + " and won");
         other_entity->kill();
     }
-        
+
+}
+
+
+string Entity::save_as_string() const{
+    string data;
+    // += doesn't work because c++ converts string to char* which don't have + operator
+    data = data + this->datatype + ":" + DataFormat::CATEGORY_START_HEADER + "\n";
+    data = data + "position:" + DataFormat::TYPE_VECTOR2 + ":" + this->position.to_string() + ";\n";
+    data = data + "age:" + DataFormat::TYPE_INT + ":" + to_string(this->age) + ";\n";
+    data = data + "power:" + DataFormat::TYPE_INT + ":" + to_string(this->power) + ";\n";
+
+    return data;
 }
 
 
@@ -75,5 +88,10 @@ void Entity::reproduce(){
         World::get_renderer()->add_to_log(this->name + " reproduced");
         World::get_instance()->add_new_entity(clone(this->position + direction));
     }
-    
+
+}
+
+
+bool CompareEntityPtr::operator()(const Entity* a, const Entity* b) const{
+    return *a < *b;
 }

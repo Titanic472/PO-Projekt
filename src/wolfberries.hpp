@@ -3,7 +3,7 @@
 class Wolfberries : public Plant{
     public:
 
-    Wolfberries(Vector2 position) : Plant(99, position, "wolfberries"){}
+    Wolfberries(Vector2 position) : Plant(99, position, "wolfberries", "Wolfberries"){}
 
     void collision(Entity *other_entity) override;
 

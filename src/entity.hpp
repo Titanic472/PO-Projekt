@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 #include "vector2.hpp"
 
@@ -11,6 +12,7 @@ class Entity{
     int power;
     int initiative;
     string name;
+    string datatype;
 
     protected:
 
@@ -19,7 +21,7 @@ class Entity{
 
     public:
 
-    Entity(int power, int initiative, Vector2 position, string name);
+    Entity(int power, int initiative, Vector2 position, string name, string datatype);
 
 
     virtual ~Entity() = default;
@@ -52,6 +54,9 @@ class Entity{
     virtual void collision(Entity *other_entity);
 
 
+    virtual string save_as_string() const;
+
+
     protected:
 
     virtual void reproduce();
@@ -62,4 +67,9 @@ class Entity{
 
     virtual Entity* clone(Vector2 position) = 0;
 
+};
+
+
+struct CompareEntityPtr {
+    bool operator()(const Entity* a, const Entity* b) const;
 };

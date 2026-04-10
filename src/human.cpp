@@ -3,14 +3,18 @@
 
 
 Human::Human(Vector2 position, int ability_cooldown) :
-    Animal(5, 4, position, "Jan Dolski", true){
+    Animal(5, 4, position, "Human", "Human", true){
 
     this->ability_cooldown = ability_cooldown;
 }
 
+Human::~Human(){
+    World::get_renderer()->add_to_log("Human died at age " + to_string(age));
+}
+
 
 Entity* Human::clone(Vector2 position){
-    return new Human(position);
+    return new Human(position, ability_cooldown);
 }
 
 
@@ -72,8 +76,20 @@ void Human::collision(Entity *other_entity){
 }
 
 
+int Human::get_ability_cooldown() const{
+    return ability_cooldown;
+}
+
+
 void Human::kill(){
     if(ability_cooldown > 5)
         return;
     Entity::kill();
+}
+
+
+string Human::save_as_string() const{
+    string data = Entity::save_as_string();
+    data = data + "ability_cooldown:" + DataFormat::TYPE_INT + ":" + to_string(this->ability_cooldown) + ";\n";
+    return data;
 }

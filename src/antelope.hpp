@@ -5,7 +5,7 @@
 class Antelope : public Animal{
     public:
 
-    Antelope(Vector2 position) : Animal(4, 4, position, "Antelope"){}
+    Antelope(Vector2 position) : Animal(4, 4, position, "Antelope", "Antelope"){}
 
 
     void collision(Entity *other_entity) override;

@@ -1,0 +1,10 @@
+;changes: type is now string
+; vector2 suport
+world_size:v2:1,2;
+
+entities:{
+Human:{
+sth:i:8;
+sth2:1:9;
+}
+}

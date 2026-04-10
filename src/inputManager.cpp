@@ -17,13 +17,18 @@ void InputManager::read_next_input(){
         new_turn_pressed = true;
         return;
     }
-    
+
     last_input = input;
 }
 
 
 int InputManager::get_last_input() const{
     return this->last_input;
+}
+
+
+void InputManager::clear_last_input(){
+    this->last_input = 0;
 }
 
 

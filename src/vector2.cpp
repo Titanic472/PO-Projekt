@@ -10,6 +10,18 @@ Vector2::Vector2(int x, int y){
 }
 
 
+Vector2::Vector2(string str){
+    int pos = str.find('_');
+    x = stoi(str.substr(0, pos));
+    y = stoi(str.substr(pos + 1));
+}
+
+
+string Vector2::to_string() const{
+    return std::to_string(x) + "_" + std::to_string(y);
+}
+
+
 bool Vector2::operator!=(const Vector2& other){
     return (this->x != other.x || this->y != other.y);
 }

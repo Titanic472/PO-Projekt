@@ -21,10 +21,12 @@
 
 // action keybinds
 #define QUIT 'q'
-// 255 is simple offset to avoid normal chars 
+// 255 is simple offset to avoid normal chars
 #define LEFT  255 + 68
 #define RIGHT 255 + 67
 #define UP   255 + 65
 #define DOWN 255 + 66
 #define ABILITY 'e'
 #define NEW_TURN 'n'
+#define SAVE 's'
+#define LOAD 'l'

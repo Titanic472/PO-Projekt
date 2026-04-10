@@ -5,7 +5,7 @@
 class SosnowskiHogweed : public Plant{
     public:
 
-    SosnowskiHogweed(Vector2 position) : Plant(10, position, "sosnowski hogweed"){}
+    SosnowskiHogweed(Vector2 position) : Plant(10, position, "sosnowski hogweed", "SosnowskiHogweed") {}
 
 
     void collision(Entity *other_entity) override;
