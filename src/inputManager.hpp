@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <ncurses.h>
 
@@ -7,6 +9,7 @@ using namespace std;
 
 class InputManager{
     int last_input = 0;
+    bool new_turn_pressed = false;
 
     public:
 
@@ -17,4 +20,7 @@ class InputManager{
 
 
     bool is_quit_pressed() const;
+
+
+    bool is_new_turn_pressed() const;
 };

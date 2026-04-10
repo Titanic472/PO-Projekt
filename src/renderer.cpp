@@ -35,8 +35,12 @@ Renderer::~Renderer(){
 }
 
 
-void Renderer::render(){
+void Renderer::render_map(){
     wrefresh(main_window);
+}
+
+
+void Renderer::render_info_window(){
     wrefresh(info_window);
 }
 
@@ -75,6 +79,10 @@ void Renderer::create_window(WINDOW **win, int height, int width, int starty, in
 
 
 void Renderer::add_to_log(string text){
+    // limit log size to match window height
+    if(log_messages.size() > (unsigned int)screen_size.y){ 
+        return;
+    }
     log_messages.push_back(text);
 }
 
@@ -101,7 +109,6 @@ void Renderer::draw_info_window(){
     
     y++; // empty line
 
-
     // entities count section
     string entities_text = "entities: <int>";
     mvwprintw(info_window, y++, 1, "%s", entities_text.substr(0, max_width).c_str());
@@ -115,7 +122,10 @@ void Renderer::draw_info_window(){
         }
         mvwprintw(info_window, y++, 1, "%s", message.substr(0, max_width).c_str());
     }
+}
 
+
+void Renderer::clear_log(){
     log_messages.clear();
 }
 

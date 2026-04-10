@@ -28,7 +28,10 @@ class Renderer{
     ~Renderer();
 
 
-    void render();
+    void render_map();
+
+
+    void render_info_window();
 
 
     void draw_char_at(Vector2 position, char text) const;
@@ -41,6 +44,9 @@ class Renderer{
 
 
     void draw_info_window();
+
+
+    void clear_log();
 
     private:
 

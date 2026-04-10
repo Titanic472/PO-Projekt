@@ -1,12 +1,13 @@
-#define MAP_SIZE_X 20
-#define MAP_SIZE_Y 10
+#define MAP_SIZE_X 40
+#define MAP_SIZE_Y 20
+#define STATUS_WIDTH 20
 
 // defines percent of tiles occupied by given entity
 #define GRASS_AMOUNT 10
 #define MILKWEED_AMOUNT 8
 #define GUARANA_AMOUNT 10
 #define WOLFBERRIES_AMOUNT 2
-#define SOSNOWSKI_HOGWEED_AMOUNT 0
+#define SOSNOWSKI_HOGWEED_AMOUNT 4
 
 #define WOLF_AMOUNT 2
 #define SHEEP_AMOUNT 5
@@ -26,6 +27,4 @@
 #define UP   255 + 65
 #define DOWN 255 + 66
 #define ABILITY 'e'
-
-
-#define STATUS_WIDTH 20
+#define NEW_TURN 'n'
