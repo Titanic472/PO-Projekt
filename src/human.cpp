@@ -9,7 +9,6 @@ Human::Human(Vector2 position, int ability_cooldown) :
 }
 
 Human::~Human(){
-    World::get_renderer()->add_to_log("Human died at age " + to_string(age));
     *(World::get_human()) = nullptr;
 }
 
@@ -85,6 +84,7 @@ int Human::get_ability_cooldown() const{
 void Human::kill(){
     if(ability_cooldown > 5)
         return;
+    World::get_renderer()->add_to_log("Human died at age " + to_string(age));
     Entity::kill();
 }
 

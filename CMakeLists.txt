@@ -23,6 +23,7 @@ add_executable(main ${SOURCES})
 # 1. Add compile options (-Wall, -g, -fsanitize=address)
 target_compile_options(main PRIVATE
     -Wall
+    -g
     -fsanitize=address
     -pg
 )
