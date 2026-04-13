@@ -2,6 +2,9 @@
 
 #include <vector>
 #include <queue>
+#include <map>
+#include <memory>
+#include <meta>
 
 #include "vector2.hpp"
 #include "config.hpp"
@@ -97,4 +100,10 @@ class World {
     template<typename T>
     void randomize_entities(int percent, int world_area);
 
+
+    void clear_entities();
+
+
+    template <typename... Types>
+    void load_entity(std::map<string, string> entity_data);
 };

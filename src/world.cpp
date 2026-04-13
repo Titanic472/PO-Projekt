@@ -26,12 +26,8 @@ World::~World(){
     delete input_manager;
 
     cout << "exited with " << entities.size() << " entities\n";
-    while (!entities.empty()){
-        Entity *entity = entities.top();
-        entities.pop();
 
-        delete entity;
-    }
+    clear_entities();
 }
 
 
@@ -76,7 +72,9 @@ bool World::perform_turn(){
             save();
         }
         else if(input_manager->get_last_input() == LOAD){
-            // load();
+            load();
+            // skip turn after loading
+            return true;
         }
 
         // redraw info window to show pressed input
@@ -155,6 +153,44 @@ void World::save(){
 }
 
 
+void World::load(){
+    renderer->clear_log();
+
+    SaveParser parser;
+
+    if(!parser.load_file(world_size)){
+        renderer->add_to_log("no save file found!");
+        return;
+    }
+
+    parser.loadEntry(&world_size, "world_size");
+
+    // clear previous world
+    delete map;
+    map = new Map(world_size);
+    clear_entities();
+
+    // load entities
+    if(!parser.jump_to_category("entities")){
+        renderer->add_to_log("incorrect save file format");
+        return;
+    }
+
+    std::map<string, string> entity_data;
+
+    while(parser.load_entry_multiline(&entity_data)){
+        load_entity<
+            Grass, Milkweed, Guarana, Wolfberries, SosnowskiHogweed,
+            Wolf, Sheep, Fox, Turtle, Antelope, Human
+            >(entity_data);
+        entity_data.clear();
+    }
+
+    next_queue();
+    renderer->add_to_log("game loaded!");
+}
+
+
 void World::add_new_entity(Entity *entity){
     if(map->is_tile_occupied(entity->get_position())){
         // convert entity into kebap
@@ -208,4 +244,35 @@ void World::randomize_entities(int world_area, int percent){
     for(int i = 0; i < amount; ++i){
         add_new_entity(new T(Vector2(rand() % world_size.x, rand() % world_size.y)));
     }
+}
+
+
+void World::clear_entities(){
+    while (!entities.empty()){
+        Entity *entity = entities.top();
+        entities.pop();
+
+        delete entity;
+    }
+}
+
+template <typename... Types>
+void World::load_entity(std::map<string, string> entity_data){
+    // C++26 features to make it easier
+    std::unique_ptr<Entity> result = nullptr;
+
+    // 'template for' expands the loop at compile-time for each type
+    template for (constexpr auto type_meta : { ^Types... }) {
+        // std::meta::name_of gets the class name (e.g., "Player") at compile-time,
+        // converting it to a string view to compare with our runtime 'name'.
+        if (entity_data["type"] == std::meta::name_of(type_meta)) {
+            // [:type_meta:] behaves exactly as the specific type in this iteration
+            result = std::make_unique<[:type_meta:]>(entity_data);
+            if(entity_data["type"] == "Human"){
+                human = static_cast<Human*>(result);
+            }
+        }
+    }
+
+    return result;
 }

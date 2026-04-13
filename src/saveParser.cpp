@@ -2,7 +2,8 @@
 
 
 void SaveParser::create_file(Vector2 world_size){
-    file = open_file("saves/" + world_size.to_string() + ".save", ios::in | ios::out | ios::trunc);
+    string file_name = "saves/" + world_size.to_string() + ".save";
+    file = open_file(file_name, ios::in | ios::out | ios::trunc);
 }
 
 
@@ -49,6 +50,146 @@ fstream SaveParser::open_file(string file_name, ios_base::openmode mode){
     }
     return file;
 }
+
+
+bool SaveParser::load_file(Vector2 world_size){
+    string file_name = "saves/" + world_size.to_string() + ".save";
+    if(!file_exists(file_name))
+        return false;
+
+    file = open_file(file_name, ios::in);
+    return true;
+}
+
+
+void SaveParser::loadEntry(void* field, string key){
+    string line;
+    while(getline(file, line)){
+        if(line.empty())
+            continue;
+
+        string entry_key = get_next_value_from_string(line);
+        if(entry_key == key){
+            string type = get_next_value_from_string(line);
+            if(type[0] == DataFormat::CATEGORY_START_HEADER){
+                cerr << "EXPECTED ENTRY BUT CATEGORY START FOUND: " << key << endl;
+                return;
+            }
+            string value = get_next_value_from_string(line);
+
+            loadField(field, type, value);
+            return;
+        }
+    }
+
+    cerr << "ENTRY: \"" << key << "\"NOT FOUND IN FILE\n";
+
+}
+
+
+bool SaveParser::jump_to_category(string category_name){
+    string line;
+    while(getline(file, line)){
+        if(line.empty())
+            continue;
+
+        string entry_key = get_next_value_from_string(line);
+        if(entry_key == category_name){
+            string type = get_next_value_from_string(line);
+            if(type[0] != DataFormat::CATEGORY_START_HEADER){
+                cerr << "EXPECTED CATEGORY START BUT ENTRY FOUND: " << category_name << endl;
+                return false;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+
+bool SaveParser::load_entry_multiline(std::map<string, string>* entry_data){
+    string line;
+    getline(file, line);
+
+    if(line.empty() || line[0] == DataFormat::CATEGORY_END_HEADER)
+        return false;
+    else{
+        (*entry_data)["type"] = get_next_value_from_string(line);
+        if(line[0] != DataFormat::CATEGORY_START_HEADER)
+            return false;
+    }
+
+    while(getline(file, line) && !line.empty() && line[0] != DataFormat::CATEGORY_END_HEADER){
+        string key = get_next_value_from_string(line);
+        get_next_value_from_string(line); // skip type for multiple values loading
+        string value = get_next_value_from_string(line);
+
+        (*entry_data)[key] = value;
+    }
+    return true;
+}
+
+
+// std::map<string, string>* SaveParser::load_next(){
+//     std::map<string, string>* entry_data = new std::map<string, string>();
+
+//     string line;
+//     getline(file, line);
+
+//     if(line.empty())
+//         return entry_data;
+
+//     entry_data->insert({"key", get_next_value_from_string(line)});
+//     entry_data->insert({"type", get_next_value_from_string(line)});
+//     if(entry_data->at("type")[0] == DataFormat::CATEGORY_START_HEADER){
+//         return entry_data;
+//     }
+//     entry_data->insert({"value", get_next_value_from_string(line)});
+
+//         string key = get_next_value_from_string(line);
+//         string value = get_next_value_from_string(line);
+
+//         (*entry_data)[key] = value;
+//     }
+//     return nullptr;
+// }
+
+
+string SaveParser::get_next_value_from_string(string &str){
+    size_t pos = str.find(DataFormat::VALUE_SEPARATOR);
+
+    // last values are not followed by value separator but entry separator instead
+    if(pos == string::npos){
+        pos = str.find(DataFormat::ENTRY_SEPARATOR);
+    }
+    return str.substr(0, pos);
+}
+
+
+// convert string value from file to given type
+void SaveParser::loadField(void* field, string type, string value){
+    if (type == DataFormat::TYPE_INT){
+        *((int*)field) = stoi(value);
+    }
+    else if (type == DataFormat::TYPE_FLOAT){
+        *((float*)field) = stof(value);
+    }
+    else if (type == DataFormat::TYPE_STRING){
+        //strip from " if present
+        if(value.front() == '\"' && value.back() == '\"'){
+            value.pop_back();
+            value.erase(value.begin());
+        }
+        *((string*)field) = value;
+    }
+    else if (type == DataFormat::TYPE_VECTOR2){
+        *((Vector2*)field) = Vector2(value);
+    }
+    else{
+        cerr << "UNKNOWN TYPE: " << type << endl;
+    }
+}
+
 
 
 

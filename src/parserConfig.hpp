@@ -8,4 +8,9 @@ namespace DataFormat {
 
     inline constexpr const char CATEGORY_START_HEADER = '{';
     inline constexpr const char CATEGORY_END_HEADER = '}';
+
+    inline constexpr const char* CATEGORY_ENTITIES = "entities";
+
+    inline constexpr const char* VALUE_SEPARATOR = ":";
+    inline constexpr const char* ENTRY_SEPARATOR = ";";
 }
