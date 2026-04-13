@@ -13,7 +13,7 @@
 #define SHEEP_AMOUNT 5
 #define FOX_AMOUNT 5
 #define TURTLE_AMOUNT 5
-#define ANTELOPE_AMOUNT 80
+#define ANTELOPE_AMOUNT 5
 
 // percent
 #define PLANTS_SPREAD_CHANCE 5

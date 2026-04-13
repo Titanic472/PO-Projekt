@@ -70,9 +70,13 @@ bool World::perform_turn(){
 
         if(input_manager->get_last_input() == SAVE){
             save();
+            input_manager->clear_last_input();
+            // skip turn after saving
+            return true;
         }
         else if(input_manager->get_last_input() == LOAD){
             load();
+            input_manager->clear_last_input();
             // skip turn after loading
             return true;
         }
@@ -102,8 +106,6 @@ bool World::perform_turn(){
 
 
 void World::draw_world(){
-    renderer->draw_info_window();
-    renderer->render_info_window();
 
     renderer->draw_map(world_size);
 
@@ -119,6 +121,9 @@ void World::draw_world(){
     renderer->render_map();
 
     next_queue();
+
+    renderer->draw_info_window();
+    renderer->render_info_window();
 }
 
 
@@ -136,7 +141,7 @@ void World::save(){
         entities.pop();
 
         if(entity->is_alive()){
-            parser.add_string_entry(entity->save_as_string());
+            parser.add_string_entry(entity->save_as_string(parser));
         }
 
         queue_to_next(entity);
@@ -179,10 +184,7 @@ void World::load(){
     std::map<string, string> entity_data;
 
     while(parser.load_entry_multiline(&entity_data)){
-        load_entity<
-            Grass, Milkweed, Guarana, Wolfberries, SosnowskiHogweed,
-            Wolf, Sheep, Fox, Turtle, Antelope, Human
-            >(entity_data);
+        load_entity(entity_data);
         entity_data.clear();
     }
 
@@ -256,23 +258,33 @@ void World::clear_entities(){
     }
 }
 
-template <typename... Types>
-void World::load_entity(std::map<string, string> entity_data){
-    // C++26 features to make it easier
-    std::unique_ptr<Entity> result = nullptr;
 
-    // 'template for' expands the loop at compile-time for each type
-    template for (constexpr auto type_meta : { ^Types... }) {
-        // std::meta::name_of gets the class name (e.g., "Player") at compile-time,
-        // converting it to a string view to compare with our runtime 'name'.
-        if (entity_data["type"] == std::meta::name_of(type_meta)) {
-            // [:type_meta:] behaves exactly as the specific type in this iteration
-            result = std::make_unique<[:type_meta:]>(entity_data);
-            if(entity_data["type"] == "Human"){
-                human = static_cast<Human*>(result);
-            }
-        }
+void World::load_entity(std::map<string, string> &entity_data){
+    // C++26 can't be easily installed on linux yet, sooo... if-else chain
+    if(entity_data["type"] == "Human"){
+        human = new Human(entity_data);
+        add_new_entity(human);
     }
-
-    return result;
+    else if(entity_data["type"] == "Grass")
+        add_new_entity(new Grass(entity_data));
+    else if(entity_data["type"] == "Milkweed")
+        add_new_entity(new Milkweed(entity_data));
+    else if(entity_data["type"] == "Guarana")
+        add_new_entity(new Guarana(entity_data));
+    else if(entity_data["type"] == "Wolfberries")
+        add_new_entity(new Wolfberries(entity_data));
+    else if(entity_data["type"] == "SosnowskiHogweed")
+        add_new_entity(new SosnowskiHogweed(entity_data));
+    else if(entity_data["type"] == "Wolf")
+        add_new_entity(new Wolf(entity_data));
+    else if(entity_data["type"] == "Sheep")
+        add_new_entity(new Sheep(entity_data));
+    else if(entity_data["type"] == "Fox")
+        add_new_entity(new Fox(entity_data));
+    else if(entity_data["type"] == "Turtle")
+        add_new_entity(new Turtle(entity_data));
+    else if(entity_data["type"] == "Antelope")
+        add_new_entity(new Antelope(entity_data));
+    else
+        renderer->add_to_log("UNKNOWN ENTITY TYPE: " + entity_data["type"]);
 }

@@ -3,15 +3,6 @@
 #include "world.hpp"
 
 
-Entity::Entity(int power, int initiative, Vector2 position, string name, string datatype){
-    this->power = power;
-    this->initiative = initiative;
-    this->position = position;
-    this->name = name;
-    this->datatype = datatype;
-}
-
-
 bool Entity::operator<(const Entity &other) const{
     if(this->initiative == other.initiative){
         return this->age < other.age;
@@ -40,8 +31,8 @@ void Entity::set_power(int power){
 }
 
 
-int Entity::get_initiative() const{
-    return this->initiative;
+string Entity::get_name() const{
+    return this->name;
 }
 
 
@@ -69,13 +60,13 @@ void Entity::collision(Entity *other_entity){
 }
 
 
-string Entity::save_as_string() const{
+string Entity::save_as_string(SaveParser &parser) const{
     string data;
-    // += doesn't work because c++ converts string to char* which don't have + operator
-    data = data + this->datatype + ":" + DataFormat::CATEGORY_START_HEADER + "\n";
-    data = data + "position:" + DataFormat::TYPE_VECTOR2 + ":" + this->position.to_string() + ";\n";
-    data = data + "age:" + DataFormat::TYPE_INT + ":" + to_string(this->age) + ";\n";
-    data = data + "power:" + DataFormat::TYPE_INT + ":" + to_string(this->power) + ";\n";
+
+    data += parser.stringify_entry(datatype, DataFormat::CATEGORY_START_HEADER);
+    data += parser.stringify_entry("position", DataFormat::TYPE_VECTOR2, this->position.to_string());
+    data += parser.stringify_entry("age", DataFormat::TYPE_INT, to_string(this->age));
+    data += parser.stringify_entry("power", DataFormat::TYPE_INT, to_string(this->power));
 
     return data;
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -27,6 +29,14 @@ class SaveParser{
 
 
     void end_category();
+
+
+    // char* type is used because string can't be const
+    string stringify_entry(string key, const char* type, string value) const;
+
+
+    // for entries without value like category start
+    string stringify_entry(string key, char type) const;
 
 
     // load functions

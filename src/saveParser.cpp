@@ -1,4 +1,5 @@
 #include "saveParser.hpp"
+#include "world.hpp"
 
 
 void SaveParser::create_file(Vector2 world_size){
@@ -27,6 +28,16 @@ void SaveParser::start_category(string category_name){
 
 void SaveParser::end_category(){
     file << DataFormat::CATEGORY_END_HEADER << "\n";
+}
+
+
+string SaveParser::stringify_entry(string key, const char* type, string value) const{
+    return key + DataFormat::VALUE_SEPARATOR + type + DataFormat::VALUE_SEPARATOR + value + DataFormat::ENTRY_SEPARATOR + "\n";
+}
+
+
+string SaveParser::stringify_entry(string key, char type) const{
+    return key + DataFormat::VALUE_SEPARATOR + type + "\n";
 }
 
 
@@ -72,7 +83,7 @@ void SaveParser::loadEntry(void* field, string key){
         if(entry_key == key){
             string type = get_next_value_from_string(line);
             if(type[0] == DataFormat::CATEGORY_START_HEADER){
-                cerr << "EXPECTED ENTRY BUT CATEGORY START FOUND: " << key << endl;
+                World::get_renderer()->add_to_log("EXPECTED ENTRY BUT CATEGORY START FOUND: " + key);
                 return;
             }
             string value = get_next_value_from_string(line);
@@ -82,7 +93,7 @@ void SaveParser::loadEntry(void* field, string key){
         }
     }
 
-    cerr << "ENTRY: \"" << key << "\"NOT FOUND IN FILE\n";
+    World::get_renderer()->add_to_log("ENTRY: \"" + key + "\" NOT FOUND IN FILE");
 
 }
 
@@ -97,7 +108,7 @@ bool SaveParser::jump_to_category(string category_name){
         if(entry_key == category_name){
             string type = get_next_value_from_string(line);
             if(type[0] != DataFormat::CATEGORY_START_HEADER){
-                cerr << "EXPECTED CATEGORY START BUT ENTRY FOUND: " << category_name << endl;
+                World::get_renderer()->add_to_log("EXPECTED CATEGORY START BUT ENTRY FOUND: " + category_name);
                 return false;
             }
             return true;
@@ -162,7 +173,9 @@ string SaveParser::get_next_value_from_string(string &str){
     if(pos == string::npos){
         pos = str.find(DataFormat::ENTRY_SEPARATOR);
     }
-    return str.substr(0, pos);
+    string result = str.substr(0, pos);
+    str = str.substr(pos + 1);
+    return result;
 }
 
 
@@ -186,7 +199,7 @@ void SaveParser::loadField(void* field, string type, string value){
         *((Vector2*)field) = Vector2(value);
     }
     else{
-        cerr << "UNKNOWN TYPE: " << type << endl;
+        World::get_renderer()->add_to_log("UNKNOWN TYPE: " + type);
     }
 }
 

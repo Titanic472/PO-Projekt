@@ -8,9 +8,15 @@ class Human : public Animal{
 
     public:
 
-    Human(Vector2 position, int ability_cooldown = 0);
+    Human(Vector2 position, int power = 5, int age = 0, int ability_cooldown = 0)
+        : Animal(power, 4, position, "Human", "Human", age, true), ability_cooldown(ability_cooldown){}
+
+
+    Human(map<string, string> properties) : Human(Vector2(properties["position"]), stoi(properties["power"]), stoi(properties["age"]), stoi(properties["ability_cooldown"])){}
+
 
     ~Human();
+
 
     void action() override;
 
@@ -24,7 +30,7 @@ class Human : public Animal{
     int get_ability_cooldown() const;
 
 
-    string save_as_string() const override;
+    string save_as_string(SaveParser &parser) const override;
 
 
     private:

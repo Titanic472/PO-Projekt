@@ -2,8 +2,10 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 
 #include "vector2.hpp"
+#include "saveParser.hpp"
 
 using namespace std;
 
@@ -17,11 +19,12 @@ class Entity{
     protected:
 
     Vector2 position;
-    int age = 0;
+    int age;
 
     public:
 
-    Entity(int power, int initiative, Vector2 position, string name, string datatype);
+    Entity(int power, int initiative, Vector2 position, string name, string datatype, int age = 0)
+        : power(power), initiative(initiative), name(name), datatype(datatype), position(position), age(age){};
 
 
     virtual ~Entity() = default;
@@ -51,10 +54,13 @@ class Entity{
     int get_power() const;
 
 
+    string get_name() const;
+
+
     virtual void collision(Entity *other_entity);
 
 
-    virtual string save_as_string() const;
+    virtual string save_as_string(SaveParser &parser) const;
 
 
     protected:

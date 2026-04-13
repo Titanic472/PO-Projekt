@@ -1,6 +1,7 @@
 #include "antelope.hpp"
 #include "world.hpp"
 
+
 Entity* Antelope::clone(Vector2 position){
     return new Antelope(position);
 }
@@ -14,7 +15,6 @@ void Antelope::move(Vector2 move_direction){
 }
 
 
-//make run away
 void Antelope::collision(Entity *other_entity){
     if(dynamic_cast<Antelope*>(other_entity)){
         Entity::reproduce();

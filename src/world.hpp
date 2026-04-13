@@ -3,8 +3,6 @@
 #include <vector>
 #include <queue>
 #include <map>
-#include <memory>
-#include <meta>
 
 #include "vector2.hpp"
 #include "config.hpp"
@@ -104,6 +102,5 @@ class World {
     void clear_entities();
 
 
-    template <typename... Types>
-    void load_entity(std::map<string, string> entity_data);
+    void load_entity(std::map<string, string> &entity_data);
 };

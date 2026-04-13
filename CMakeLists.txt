@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 # Name your project
 project(PO_Projekt)
 
-# C++ standard (C++26 is required)
-set(CMAKE_CXX_STANDARD 26)
+# Specify the C++ standard (C++17 is recommended, change if needed)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 file(GLOB_RECURSE SOURCES

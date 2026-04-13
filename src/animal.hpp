@@ -3,13 +3,13 @@
 #include "entity.hpp"
 
 class Animal : public Entity{
-    // implement
     bool can_kill;
 
 
     public:
 
-    Animal(int power, int initiative, Vector2 position, string name, string datatype, bool can_kill = false);
+    Animal(int power, int initiative, Vector2 position, string name, string datatype, int age = 0, bool can_kill = false)
+        : Entity(power, initiative, position, name, datatype, age), can_kill(can_kill){};
 
 
     virtual void action() override;

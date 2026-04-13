@@ -1,13 +1,6 @@
 #include "human.hpp"
 #include "world.hpp"
 
-
-Human::Human(Vector2 position, int ability_cooldown) :
-    Animal(5, 4, position, "Human", "Human", true){
-
-    this->ability_cooldown = ability_cooldown;
-}
-
 Human::~Human(){
     *(World::get_human()) = nullptr;
 }
@@ -89,8 +82,8 @@ void Human::kill(){
 }
 
 
-string Human::save_as_string() const{
-    string data = Entity::save_as_string();
-    data = data + "ability_cooldown:" + DataFormat::TYPE_INT + ":" + to_string(this->ability_cooldown) + ";\n";
+string Human::save_as_string(SaveParser &parser) const{
+    string data = Entity::save_as_string(parser);
+    data += parser.stringify_entry("ability_cooldown", DataFormat::TYPE_INT, to_string(this->ability_cooldown));
     return data;
 }

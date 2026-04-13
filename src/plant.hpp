@@ -6,7 +6,7 @@
 class Plant : public Entity{
     public:
 
-    Plant(int power, Vector2 position, string name, string datatype) : Entity(power, 0, position, name, datatype){}
+    Plant(int power, Vector2 position, string name, string datatype, int age = 0) : Entity(power, 0, position, name, datatype, age){}
 
 
     ~Plant(){}
