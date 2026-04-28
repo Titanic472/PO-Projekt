@@ -141,31 +141,6 @@ bool SaveParser::load_entry_multiline(std::map<string, string>* entry_data){
 }
 
 
-// std::map<string, string>* SaveParser::load_next(){
-//     std::map<string, string>* entry_data = new std::map<string, string>();
-
-//     string line;
-//     getline(file, line);
-
-//     if(line.empty())
-//         return entry_data;
-
-//     entry_data->insert({"key", get_next_value_from_string(line)});
-//     entry_data->insert({"type", get_next_value_from_string(line)});
-//     if(entry_data->at("type")[0] == DataFormat::CATEGORY_START_HEADER){
-//         return entry_data;
-//     }
-//     entry_data->insert({"value", get_next_value_from_string(line)});
-
-//         string key = get_next_value_from_string(line);
-//         string value = get_next_value_from_string(line);
-
-//         (*entry_data)[key] = value;
-//     }
-//     return nullptr;
-// }
-
-
 string SaveParser::get_next_value_from_string(string &str){
     size_t pos = str.find(DataFormat::VALUE_SEPARATOR);
 
@@ -202,19 +177,3 @@ void SaveParser::loadField(void* field, string type, string value){
         World::get_renderer()->add_to_log("UNKNOWN TYPE: " + type);
     }
 }
-
-
-
-
-// void SaveParser::save(Vector2 world_size){
-//     fstream file = open_file("saves/" + world_size.to_string(), ios::out | ios::trunc);
-
-//     file << "world_size:V2:" << world_size.to_string() << ";\n";
-
-
-//     file.close();
-// }
-
-
-// void SaveParser::load(Vector2 world_size){
-// }
