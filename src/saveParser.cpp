@@ -47,8 +47,8 @@ void SaveParser::close_file(){
 
 
 bool SaveParser::file_exists(string file_name){
-    ifstream file(file_name);
-    return file.good();
+    ifstream filee(file_name);
+    return filee.good();
 }
 
 

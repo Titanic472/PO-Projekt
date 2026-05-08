@@ -1,1 +1,0 @@
-gcc -o main main.c interface.c mapsManagement.c collisionHandler.c moveHandler.c functions.c fileParser.c entityManager.c albatrossTaxi.c init.c inputHandler.c -lncursesw -fsanitize=address -g -Wall
