@@ -1,6 +1,7 @@
 package po.world_simulator.entities;
 
 import po.world_simulator.Entity;
+import po.world_simulator.Map;
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
 
@@ -28,6 +29,18 @@ public abstract class Animal extends Entity {
 
     @Override
     public void collision(Entity otherEntity) {
+        if (this.getClass().equals(otherEntity.getClass())) {
+            this.reproduce();
+            return;
+        }
+
+        if (otherEntity instanceof Animal) {
+            Animal enemy = (Animal) otherEntity;
+            if (this.getPower() <= enemy.getPower() && !enemy.isPredator()) {
+                this.runAway();
+                return;
+            }
+        }
         super.collision(otherEntity);
     }
 
@@ -36,35 +49,32 @@ public abstract class Animal extends Entity {
     }
 
     protected void move(Vector2 moveDirection) {
+        Map map = World.getMap();
         Vector2 targetPos = this.position.add(moveDirection);
+        Entity collisionTarget = map.getEntityAt(targetPos);
 
-        if (World.getMap().isTileOccupied(targetPos)) {
-            Entity occupant = World.getMap().getEntityAt(targetPos);
-            // Jeżeli ten sam gatunek to rozmnażanie
-            if (occupant.getName().equals(this.getName())) {
-                this.reproduce();
-            } else {
-                this.collision(occupant);
-                if (this.isAlive()) {
-                    World.getMap().move(this.position, targetPos);
-                    this.position = targetPos;
-                }
+        if (collisionTarget != null) {
+            collisionTarget.collision(this);
+
+            if (!this.isAlive()) {
+                return;
             }
-        } else {
-            World.getMap().move(this.position, targetPos);
+        }
+
+        if (map.getEntityAt(targetPos) == null) {
+            map.move(this.position, targetPos);
             this.position = targetPos;
         }
     }
 
     protected boolean runAway() {
-        Vector2 moveDir = World.getMap().getPossibleMoveDirection(this.position, true);
+        Map map = World.getMap();
+        Vector2 direction = map.getPossibleMoveDirection(this.position, true);
+
         if (!moveDir.equals(Vector2.ZERO)) {
-            Vector2 targetPos = this.position.add(moveDir);
-            World.getMap().move(this.position, targetPos);
-            this.position = targetPos;
-            World.getRenderer().addToLog(this.getName() + " ran away.");
+            move(direction);
             return true;
         }
-        return false; // nie udało się uciec
+        return false;
     }
 }
