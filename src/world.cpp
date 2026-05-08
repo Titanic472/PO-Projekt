@@ -93,9 +93,8 @@ bool World::perform_turn(){
         Entity *entity = entities.top();
         entities.pop();
 
-        if (entity->is_alive()){
+        if (entity->is_alive())
             entity->action();
-        }
 
         queue_to_next(entity);
     }
@@ -113,7 +112,8 @@ void World::draw_world(){
         Entity *entity = entities.top();
         entities.pop();
 
-        entity->draw();
+        if (entity->is_alive())
+            entity->draw();
 
         queue_to_next(entity);
     }
@@ -207,12 +207,10 @@ void World::add_new_entity(Entity *entity){
 
 
 void World::queue_to_next(Entity *entity){
-    if(entity->is_alive()){
-        next_turn_entities.push(entity);
-    }
-    else{
+    if(entity->is_alive())
+        next_turn_entities.push(entity); 
+    else 
         delete entity;
-    }
 }
 
 
