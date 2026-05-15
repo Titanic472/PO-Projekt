@@ -45,6 +45,9 @@ public class World {
 
     public void dispose() {
         clearEntities();
+        renderer.dispose()
+        if(instance == this)
+            instance = null;
     }
 
     public static Renderer getRenderer() {
