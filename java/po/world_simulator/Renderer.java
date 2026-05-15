@@ -73,8 +73,8 @@ public class Renderer {
 
         // Przyciski (B1 i B2)
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btnSave = new JButton("Save / B1");
-        btnLoad = new JButton("Load / B2");
+        btnSave = new JButton("Save");
+        btnLoad = new JButton("Load");
         buttonsPanel.add(btnSave);
         buttonsPanel.add(btnLoad);
 

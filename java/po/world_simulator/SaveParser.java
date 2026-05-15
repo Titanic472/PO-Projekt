@@ -2,7 +2,6 @@ package po.world_simulator;
 
 import java.io.*;
 import java.util.Map;
-import java.util.HashMap;
 
 public class SaveParser {
     private BufferedReader reader;

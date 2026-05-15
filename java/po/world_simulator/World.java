@@ -28,7 +28,7 @@ public class World {
     public World() {
         worldSize = new Vector2(Config.MAP_SIZE_X, Config.MAP_SIZE_Y);
 
-        this.map = new Map(worldSize);
+        this.map = new po.world_simulator.Map(worldSize);
         this.renderer = new Renderer(worldSize);
         this.inputManager = new InputManager();
 
@@ -167,7 +167,7 @@ public class World {
             return;
         }
 
-        worldSize = parser.loadEntryVector2("world_size");
+        worldSize = (Vector2)parser.loadEntry("world_size");
 
         // clear previous world
         map = new po.world_simulator.Map(worldSize);

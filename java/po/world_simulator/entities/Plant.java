@@ -1,9 +1,7 @@
 package po.world_simulator.entities;
 
-import po.world_simulator.entities.Entity;
 import po.world_simulator.Vector2;
 import po.world_simulator.Config;
-import po.world_simulator.World;
 
 public abstract class Plant extends Entity {
 
