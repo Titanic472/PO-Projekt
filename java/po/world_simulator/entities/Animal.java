@@ -1,6 +1,5 @@
 package po.world_simulator.entities;
 
-import po.world_simulator.Entity;
 import po.world_simulator.Map;
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
@@ -71,7 +70,7 @@ public abstract class Animal extends Entity {
         Map map = World.getMap();
         Vector2 direction = map.getPossibleMoveDirection(this.position, true);
 
-        if (!moveDir.equals(Vector2.ZERO)) {
+        if (!direction.equals(Vector2.ZERO)) {
             move(direction);
             return true;
         }

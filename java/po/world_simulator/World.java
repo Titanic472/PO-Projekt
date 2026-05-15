@@ -3,11 +3,12 @@ package po.world_simulator;
 import java.util.PriorityQueue;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Map as JavaMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import po.world_simulator.entities.plants.*;
 import po.world_simulator.entities.animals.*;
+import po.world_simulator.entities.Entity;
 
 public class World {
     // [AI] C++ std::priority_queue jest max-heap, domyślna w Javie to min-heap.
@@ -17,7 +18,7 @@ public class World {
 
     private Vector2 worldSize;
 
-    private Map map;
+    private po.world_simulator.Map map;
     private Renderer renderer;
     private InputManager inputManager;
 
@@ -45,7 +46,7 @@ public class World {
 
     public void dispose() {
         clearEntities();
-        renderer.dispose()
+        renderer.dispose();
         if(instance == this)
             instance = null;
     }
@@ -54,7 +55,7 @@ public class World {
         return instance.renderer;
     }
 
-    public static Map getMap() {
+    public static po.world_simulator.Map getMap() {
         return instance.map;
     }
 
@@ -169,7 +170,7 @@ public class World {
         worldSize = parser.loadEntryVector2("world_size");
 
         // clear previous world
-        map = new Map(worldSize);
+        map = new po.world_simulator.Map(worldSize);
         clearEntities();
 
         // load entities
@@ -178,7 +179,7 @@ public class World {
             return;
         }
 
-        JavaMap<String, String> entityData = new HashMap<>();
+        Map<String, String> entityData = new HashMap<>();
 
         while (parser.loadEntryMultiline(entityData)) {
             loadEntity(entityData);
@@ -238,7 +239,7 @@ public class World {
         }
     }
 
-    public void loadEntity(JavaMap<String, String> entityData) {
+    public void loadEntity(Map<String, String> entityData) {
         String type = entityData.get("type");
 
         // Szukamy klasy po jej nazwie względem konkretnego pakietu
@@ -250,7 +251,7 @@ public class World {
         for (String pkg : packages) {
             try {
                 Class<?> clazz = Class.forName(pkg + type);
-                Entity entity = (Entity) clazz.getDeclaredConstructor(JavaMap.class).newInstance(entityData);
+                Entity entity = (Entity) clazz.getDeclaredConstructor(Map.class).newInstance(entityData);
                 addNewEntity(entity);
                 return;
             } catch (Exception ignored) {

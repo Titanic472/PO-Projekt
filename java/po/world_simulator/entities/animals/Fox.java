@@ -1,6 +1,6 @@
 package po.world_simulator.entities.animals;
 
-import po.world_simulator.Entity;
+import po.world_simulator.entities.Entity;
 import po.world_simulator.Map;
 import po.world_simulator.Vector2;
 import po.world_simulator.World;

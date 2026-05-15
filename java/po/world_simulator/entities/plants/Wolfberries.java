@@ -1,6 +1,6 @@
 package po.world_simulator.entities.plants;
 
-import po.world_simulator.Entity;
+import po.world_simulator.entities.Entity;
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
 import po.world_simulator.entities.Plant;

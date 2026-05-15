@@ -1,6 +1,9 @@
-package po.world_simulator;
+package po.world_simulator.entities;
 
 import java.util.Map;
+import po.world_simulator.Vector2;
+import po.world_simulator.World;
+import po.world_simulator.DataFormat;
 
 public abstract class Entity implements Comparable<Entity> {
     private boolean isDead = false;

@@ -2,6 +2,7 @@ package po.world_simulator;
 
 import java.util.ArrayList;
 import java.util.List;
+import po.world_simulator.entities.Entity;
 
 public class Map {
     private final Vector2[] tileNeighbours = {

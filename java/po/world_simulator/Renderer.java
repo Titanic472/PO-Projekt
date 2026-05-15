@@ -2,6 +2,9 @@ package po.world_simulator;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import po.world_simulator.entities.animals.Human;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -123,7 +126,7 @@ public class Renderer {
     }
 
     public void renderInfoWindow() {
-        po.world_simulator.entities.animals.Human human = World.getHuman();
+        po.world_simulator.entities.animals.Human human = Human.getInstance();
 
         if (human != null) {
             lblCooldown.setText("ability cooldown: " + human.getAbilityCooldown());
