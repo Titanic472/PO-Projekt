@@ -7,22 +7,20 @@ public abstract class Entity implements Comparable<Entity> {
     private int power;
     private int initiative;
     private String name;
-    private String datatype;
 
     protected Vector2 position;
     protected int age;
 
-    public Entity(int power, int initiative, Vector2 position, String name, String datatype, int age) {
+    public Entity(int power, int initiative, Vector2 position, String name, int age) {
         this.power = power;
         this.initiative = initiative;
         this.name = name;
-        this.datatype = datatype;
         this.position = position;
         this.age = age;
     }
 
-    public Entity(int power, int initiative, Vector2 position, String name, String datatype) {
-        this(power, initiative, position, name, datatype, 0);
+    public Entity(int power, int initiative, Vector2 position, String name) {
+        this(power, initiative, position, name, 0);
     }
 
     // [AI] Ręczne usuwanie / sprzątanie by odciążyć powiązania
@@ -81,7 +79,7 @@ public abstract class Entity implements Comparable<Entity> {
     public String saveAsString(SaveParser parser) {
         // [AI] Wykorzystanie parsera zapisu, wymaga dopasowania do jawnego przekazywania argumentów w Javie
         String data = "";
-        data += parser.stringifyEntry(datatype, DataFormat.CATEGORY_START_HEADER);
+        data += parser.stringifyEntry(this.getClass().getSimpleName(), DataFormat.CATEGORY_START_HEADER);
         data += parser.stringifyEntry("position", DataFormat.TYPE_VECTOR2, this.position.toString());
         data += parser.stringifyEntry("age", DataFormat.TYPE_INT, String.valueOf(this.age));
         data += parser.stringifyEntry("power", DataFormat.TYPE_INT, String.valueOf(this.power));

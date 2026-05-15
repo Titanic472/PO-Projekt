@@ -5,7 +5,7 @@ import po.world_simulator.entities.Plant;
 
 public class Grass extends Plant {
     public Grass(Vector2 position, int age) {
-        super(0, position, "trawa:)", "Grass", age);
+        super(0, position, "trawa:)", age);
     }
 
     public Grass(Vector2 position) {

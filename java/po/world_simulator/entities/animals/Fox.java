@@ -8,7 +8,7 @@ import po.world_simulator.entities.Animal;
 
 public class Fox extends Animal {
     public Fox(Vector2 position, int power, int age) {
-        super(power, 7, position, "Fox", "Fox", age, true);
+        super(power, 7, position, "Fox", age, true);
     }
 
     public Fox(Vector2 position) {

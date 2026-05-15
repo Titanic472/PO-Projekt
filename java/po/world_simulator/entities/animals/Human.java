@@ -1,13 +1,19 @@
-package po.world_simulator;
+package po.world_simulator.entities.animals;
 
+import po.world_simulator.Config;
+import po.world_simulator.DataFormat;
+import po.world_simulator.SaveParser;
+import po.world_simulator.Vector2;
+import po.world_simulator.World;
 import po.world_simulator.entities.Animal;
+import po.world_simulator.entities.Entity;
 
 public class Human extends Animal {
     private int abilityCooldown;
     private static Human instance;
 
     public Human(Vector2 position, int power, int age, int abilityCooldown) {
-        super(power, 4, position, "Human", "Human", age, true);
+        super(power, 4, position, "Human", age, true);
         this.abilityCooldown = abilityCooldown;
 
         if (instance != null)
@@ -22,11 +28,6 @@ public class Human extends Animal {
 
     public static Human getInstance() {
         return instance;
-    }
-
-    @Override
-    public Entity clone(Vector2 position) {
-        return new Human(position, this.getPower(), this.age, this.abilityCooldown);
     }
 
     @Override
@@ -91,9 +92,8 @@ public class Human extends Animal {
 
     @Override
     public void kill() {
-        if (abilityCooldown > 5) {
+        if (abilityCooldown > 5)
             return;
-        }
         World.getRenderer().addToLog("Human died at age " + this.age);
         super.kill();
     }

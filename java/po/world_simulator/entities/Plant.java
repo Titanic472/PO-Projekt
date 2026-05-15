@@ -7,12 +7,12 @@ import po.world_simulator.World;
 
 public abstract class Plant extends Entity {
 
-    public Plant(int power, Vector2 position, String name, String datatype, int age) {
-        super(power, 0, position, name, datatype, age);
+    public Plant(int power, Vector2 position, String name, int age) {
+        super(power, 0, position, name, age);
     }
 
-    public Plant(int power, Vector2 position, String name, String datatype) {
-        this(power, position, name, datatype, 0);
+    public Plant(int power, Vector2 position, String name) {
+        this(power, position, name, 0);
     }
 
     @Override

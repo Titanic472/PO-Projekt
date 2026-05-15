@@ -45,7 +45,7 @@ public class Vector2 {
     }
 
     public Vector2 multiply(float scale) {
-        return new Vector2((int)(this.x * scale), (int)(this.y * scale)); // [AI] rzutowanie na int
+        return new Vector2((int)(this.x * scale), (int)(this.y * scale));
     }
 
     public void multiplySelf(int scale) {

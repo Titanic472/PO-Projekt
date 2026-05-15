@@ -7,7 +7,7 @@ import po.world_simulator.entities.Animal;
 
 public class Antelope extends Animal {
     public Antelope(Vector2 position, int power, int age) {
-        super(power, 4, position, "Antelope", "Antelope", age, false);
+        super(power, 4, position, "Antelope", age, false);
     }
 
     public Antelope(Vector2 position) {

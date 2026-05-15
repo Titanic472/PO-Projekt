@@ -6,7 +6,7 @@ import po.world_simulator.entities.Animal;
 
 public class Turtle extends Animal {
     public Turtle(Vector2 position, int power, int age) {
-        super(power, 1, position, "Turtle", "Turtle", age, false);
+        super(power, 1, position, "Turtle", age, false);
     }
 
     public Turtle(Vector2 position) {

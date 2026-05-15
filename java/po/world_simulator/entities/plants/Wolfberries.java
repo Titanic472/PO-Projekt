@@ -7,7 +7,7 @@ import po.world_simulator.entities.Plant;
 
 public class Wolfberries extends Plant {
     public Wolfberries(Vector2 position, int age) {
-        super(99, position, "wolfberries", "Wolfberries", age);
+        super(99, position, "wolfberries", age);
     }
 
     public Wolfberries(Vector2 position) {

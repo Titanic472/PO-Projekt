@@ -6,7 +6,7 @@ import po.world_simulator.entities.Plant;
 
 public class Milkweed extends Plant {
     public Milkweed(Vector2 position, int age) {
-        super(0, position, "milkweed", "Milkweed", age);
+        super(0, position, "milkweed", age);
     }
 
     public Milkweed(Vector2 position) {

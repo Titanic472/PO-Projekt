@@ -8,13 +8,13 @@ import po.world_simulator.World;
 public abstract class Animal extends Entity {
     private boolean canKill;
 
-    public Animal(int power, int initiative, Vector2 position, String name, String datatype, int age, boolean canKill) {
-        super(power, initiative, position, name, datatype, age);
+    public Animal(int power, int initiative, Vector2 position, String name, int age, boolean canKill) {
+        super(power, initiative, position, name, age);
         this.canKill = canKill;
     }
 
-    public Animal(int power, int initiative, Vector2 position, String name, String datatype) {
-        this(power, initiative, position, name, datatype, 0, false);
+    public Animal(int power, int initiative, Vector2 position, String name) {
+        this(power, initiative, position, name, 0, false);
     }
 
     @Override

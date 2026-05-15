@@ -5,7 +5,7 @@ import po.world_simulator.entities.Animal;
 
 public class Sheep extends Animal {
     public Sheep(Vector2 position, int power, int age) {
-        super(power, 4, position, "Sheep", "Sheep", age, false;
+        super(power, 4, position, "Sheep", age, false;
     }
 
     public Sheep(Vector2 position) {

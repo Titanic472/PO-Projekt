@@ -6,7 +6,7 @@ import po.world_simulator.entities.Plant;
 
 public class Guarana extends Plant {
     public Guarana(Vector2 position, int age) {
-        super(0, position, "guarana", "Guarana", age);
+        super(0, position, "guarana", age);
     }
 
     public Guarana(Vector2 position) {

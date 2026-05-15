@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SosnowskiHogweed extends Plant {
     public SosnowskiHogweed(Vector2 position, int age) {
-        super(10, position, "sosnowski hogweed", "SosnowskiHogweed", age);
+        super(10, position, "sosnowski hogweed", age);
     }
 
     public SosnowskiHogweed(Vector2 position) {
