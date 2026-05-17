@@ -29,7 +29,7 @@ public class World {
         worldSize = new Vector2(Config.MAP_SIZE_X, Config.MAP_SIZE_Y);
 
         this.map = new po.world_simulator.Map(worldSize);
-        this.renderer = new Renderer(worldSize);
+        this.renderer = new RendererHex(worldSize);
         this.inputManager = new InputManager();
 
         if (instance != null) {
@@ -251,7 +251,8 @@ public class World {
         for (String pkg : packages) {
             try {
                 Class<?> clazz = Class.forName(pkg + type);
-                Entity entity = (Entity) clazz.getDeclaredConstructor(Map.class).newInstance(entityData);
+                System.out.println(pkg + type);
+                Entity entity = (Entity) clazz.getDeclaredConstructor(Map.class).newInstance(new Vector2(0, 0));
                 addNewEntity(entity);
                 return;
             } catch (Exception ignored) {

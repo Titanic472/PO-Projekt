@@ -4,9 +4,9 @@ public class Main {
     public static void main(String[] args) {
         World world = new World();
 
-        // Podpinamy przyciski zapisu i odczytu GUI pod metody logiki świata
-        World.getRenderer().bind("Save", () -> world.save());
-        World.getRenderer().bind("Load", () -> world.load());
+        // Podpinamy przyciski zapisu i odczytu GUI pod wejście asynchroniczne
+        World.getRenderer().bind("Save", () -> World.getInputManager().pushInput((int) Config.SAVE));
+        World.getRenderer().bind("Load", () -> World.getInputManager().pushInput((int) Config.LOAD));
 
         // Główna pętla gry (odpowiednik C++)
         do {

@@ -6,32 +6,66 @@ import javax.swing.border.LineBorder;
 import po.world_simulator.entities.animals.Human;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 public class Renderer {
-    private JFrame frame;
-    private JPanel mapPanel;
-    private JPanel statusPanel;
+    protected JFrame frame;
+    protected JPanel mapPanel;
+    protected JPanel statusPanel;
 
-    private JLabel[][] gridLabels;
+    protected JLabel[][] gridLabels;
 
-    private JButton btnSave;
-    private JButton btnLoad;
+    protected JButton btnSave;
+    protected JButton btnLoad;
 
-    private JLabel lblNextAction;
-    private JLabel lblCooldown;
-    private JLabel lblEntities;
-    private JTextArea logArea;
+    protected JLabel lblNextAction;
+    protected JLabel lblCooldown;
+    protected JLabel lblEntities;
+    protected JTextArea logArea;
 
-    private LinkedList<String> logMessages = new LinkedList<>();
+    protected LinkedList<String> logMessages = new LinkedList<>();
 
     public Renderer(Vector2 mapSize) {
         frame = new JFrame("World Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         frame.setLayout(new BorderLayout());
+
+        // --- GLOBAL KEY LISTENER ---
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                    InputManager im = World.getInputManager();
+                    if (im == null) return false;
+
+                    int code = e.getKeyCode();
+                    if (code == KeyEvent.VK_LEFT)
+                        im.pushInput(Config.LEFT);
+                    else if (code == KeyEvent.VK_RIGHT)
+                        im.pushInput(Config.RIGHT);
+                    else if (code == KeyEvent.VK_UP)
+                        im.pushInput(Config.UP);
+                    else if (code == KeyEvent.VK_DOWN)
+                        im.pushInput(Config.DOWN);
+                    else if (code == KeyEvent.VK_E)
+                        im.pushInput(Config.ABILITY);
+                    else if (code == KeyEvent.VK_N)
+                        im.pushInput(Config.NEW_TURN);
+                    else if (code == KeyEvent.VK_S)
+                        im.pushInput(Config.SAVE);
+                    else if (code == KeyEvent.VK_L)
+                        im.pushInput(Config.LOAD);
+                    else if (code == KeyEvent.VK_Q)
+                        im.pushInput(Config.QUIT);
+                    renderInfoWindow();
+                }
+                return false;
+            }
+        });
 
         // --- MAP PANEL ---
         mapPanel = new JPanel(new GridLayout(mapSize.y, mapSize.x));
@@ -52,7 +86,6 @@ public class Renderer {
                 cell.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        // TODO: Kliknięcie i otwieranie okna dialogowego do dodawania obiektów w przyszłości
                         System.out.println("Kliknięto koordynaty gry x: " + cx + ", y: " + cy);
                     }
                 });
@@ -63,18 +96,22 @@ public class Renderer {
         }
 
         // --- STATUS PANEL ---
-        statusPanel = new JPanel();
-        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.Y_AXIS));
+        statusPanel = new JPanel(new BorderLayout());
 
-        // Ustalenie stałej szerokości na bazie % i STATUS_WIDTH
         int statusWidth = (Config.WINDOW_WIDTH * Config.STATUS_WIDTH) / 100;
         statusPanel.setPreferredSize(new Dimension(statusWidth, Config.WINDOW_HEIGHT));
         statusPanel.setBorder(new LineBorder(Color.BLACK, 2));
+
+        // Górna sekcja statusu
+        JPanel topStatusPanel = new JPanel();
+        topStatusPanel.setLayout(new BoxLayout(topStatusPanel, BoxLayout.Y_AXIS));
 
         // Przyciski (B1 i B2)
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnSave = new JButton("Save");
         btnLoad = new JButton("Load");
+        btnSave.setFocusable(false); // Unikamy zabierania focusu fizycznej klawiaturze
+        btnLoad.setFocusable(false);
         buttonsPanel.add(btnSave);
         buttonsPanel.add(btnLoad);
 
@@ -83,24 +120,28 @@ public class Renderer {
         lblCooldown = new JLabel("ability cooldown: ");
         lblEntities = new JLabel("entities: ");
 
-        // Pole logu (lista akcji)
+        lblNextAction.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblCooldown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblEntities.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        topStatusPanel.add(buttonsPanel);
+        topStatusPanel.add(lblNextAction);
+        topStatusPanel.add(lblCooldown);
+        topStatusPanel.add(lblEntities);
+
+        // Dolna sekcja logów
+        JPanel mainLogPanel = new JPanel(new BorderLayout());
+        JLabel logTitle = new JLabel("log:", SwingConstants.CENTER);
         logArea = new JTextArea();
         logArea.setEditable(false);
         logArea.setFocusable(false);
         JScrollPane scrollPane = new JScrollPane(logArea);
 
-        lblNextAction.setAlignmentX(Component.CENTER_ALIGNMENT);
-        lblCooldown.setAlignmentX(Component.CENTER_ALIGNMENT);
-        lblEntities.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mainLogPanel.add(logTitle, BorderLayout.NORTH);
+        mainLogPanel.add(scrollPane, BorderLayout.CENTER);
 
-        statusPanel.add(buttonsPanel);
-        statusPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        statusPanel.add(lblNextAction);
-        statusPanel.add(lblCooldown);
-        statusPanel.add(lblEntities);
-        statusPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        statusPanel.add(new JLabel("log:"));
-        statusPanel.add(scrollPane);
+        statusPanel.add(topStatusPanel, BorderLayout.NORTH);
+        statusPanel.add(mainLogPanel, BorderLayout.CENTER);
 
         frame.add(mapPanel, BorderLayout.CENTER);
         frame.add(statusPanel, BorderLayout.EAST);
@@ -126,6 +167,10 @@ public class Renderer {
     }
 
     public void renderInfoWindow() {
+        String button_text = "next action: ";
+        button_text += convertInputToText(World.getInputManager().getLastInput());
+        lblNextAction.setText(button_text);
+
         po.world_simulator.entities.animals.Human human = Human.getInstance();
 
         if (human != null) {
@@ -180,4 +225,23 @@ public class Renderer {
     public void dispose() {
         frame.dispose();
     }
+
+
+    public String convertInputToText(int input){
+    switch (input)
+    {
+    case Config.LEFT:
+        return "LEFT";
+    case Config.RIGHT:
+        return "RIGHT";
+    case Config.UP:
+        return "UP";
+    case Config.DOWN:
+        return "DOWN";
+    case Config.ABILITY:
+        return "ABILITY";
+    default:
+        return "";
+    }
+}
 }
