@@ -2,7 +2,7 @@ package po.world_simulator;
 
 public class Main {
     public static void main(String[] args) {
-        World world = new World();
+        World world = new World(Config.HEX_ENABLED);
 
         // Podpinamy przyciski zapisu i odczytu GUI pod wejście asynchroniczne
         World.getRenderer().bind("Save", () -> World.getInputManager().pushInput((int) Config.SAVE));

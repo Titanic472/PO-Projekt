@@ -208,6 +208,8 @@ public class SaveParser {
                 return value;
             case DataFormat.TYPE_VECTOR2:
                 return new Vector2(value);
+            case DataFormat.TYPE_BOOLEAN:
+                return Boolean.parseBoolean(value);
             default:
                 World.getRenderer().addToLog("UNKNOWN TYPE: " + type);
                 return null;

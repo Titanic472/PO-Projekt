@@ -26,7 +26,7 @@ public class RendererHex extends Renderer {
 
         hexMapPanel = new HexPanel(mapSize);
         frame.add(hexMapPanel, BorderLayout.CENTER);
-        
+
         // Odświeżamy ramkę po zmianach panelu
         frame.revalidate();
         frame.repaint();
@@ -72,8 +72,7 @@ public class RendererHex extends Renderer {
                     for (int y = 0; y < mapSize.y; y++) {
                         for (int x = 0; x < mapSize.x; x++) {
                             if (hexagons[y][x] != null && hexagons[y][x].contains(e.getPoint())) {
-                                System.out.println("Kliknięto Hex -> x: " + x + ", y: " + y);
-                                // Tutaj w przyszłości można dodać obsługę interakcji, jak w klasie bazowej.
+                                showAddEntityDialog(new Vector2(x, y));
                             }
                         }
                     }
@@ -85,7 +84,7 @@ public class RendererHex extends Renderer {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            
+
             // Antialiasing, żeby krawędzie były gładkie
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -130,7 +129,7 @@ public class RendererHex extends Renderer {
                     hexagons[y][x] = hex;
 
                     // Tło komórki
-                    g2d.setColor(Config.GRID_BG_COLOR);
+                    g2d.setColor(Config.DEFAULT_GRID_BG_COLOR);
                     g2d.fillPolygon(hex);
 
                     // Obramowanie
@@ -155,7 +154,7 @@ public class RendererHex extends Renderer {
             Polygon polygon = new Polygon();
             for (int i = 0; i < 6; i++) {
                 // Kąt startowy -30 stopni dla sześciokąta "spiczastego" (pointy-topped)
-                double angle_deg = 60 * i - 30; 
+                double angle_deg = 60 * i - 30;
                 double angle_rad = Math.PI / 180 * angle_deg;
                 int px = (int) Math.round(x + size * Math.cos(angle_rad));
                 int py = (int) Math.round(y + size * Math.sin(angle_rad));

@@ -76,7 +76,7 @@ public class Renderer {
             for (int x = 0; x < mapSize.x; x++) {
                 JLabel cell = new JLabel("", SwingConstants.CENTER);
                 cell.setOpaque(true);
-                cell.setBackground(Config.GRID_BG_COLOR);
+                cell.setBackground(Config.DEFAULT_GRID_BG_COLOR);
                 cell.setBorder(new LineBorder(Config.BORDER_COLOR, Config.BORDER_THICKNESS));
                 cell.setForeground(Config.TEXT_COLOR);
                 cell.setFont(new Font("Monospaced", Font.BOLD, Config.BLOCK_FONT_SIZE));
@@ -86,7 +86,7 @@ public class Renderer {
                 cell.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        System.out.println("Kliknięto koordynaty gry x: " + cx + ", y: " + cy);
+                        showAddEntityDialog(new Vector2(cx, cy));
                     }
                 });
 
@@ -228,8 +228,7 @@ public class Renderer {
 
 
     public String convertInputToText(int input){
-    switch (input)
-    {
+    switch (input){
     case Config.LEFT:
         return "LEFT";
     case Config.RIGHT:
@@ -243,5 +242,50 @@ public class Renderer {
     default:
         return "";
     }
-}
+    }
+
+    protected void showAddEntityDialog(Vector2 position) {
+        po.world_simulator.Map map = World.getMap();
+        if (map != null && map.isTileOccupied(position)) {
+            return;
+        }
+
+        String[] entities = {
+            "Wolf", "Sheep", "Fox", "Turtle", "Antelope",
+            "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed"
+        };
+
+        String message = "Pozycja pola: (" + position.x + ", " + position.y + ")\nWybierz obiekt do dodania:";
+        String selected = (String) JOptionPane.showInputDialog(
+            frame,
+            message,
+            "Dodaj Entity",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            entities,
+            entities[0]
+        );
+
+        if (selected != null && !selected.isEmpty()) {
+            po.world_simulator.entities.Entity newEntity = null;
+            switch (selected) {
+                case "Wolf": newEntity = new po.world_simulator.entities.animals.Wolf(position); break;
+                case "Sheep": newEntity = new po.world_simulator.entities.animals.Sheep(position); break;
+                case "Fox": newEntity = new po.world_simulator.entities.animals.Fox(position); break;
+                case "Turtle": newEntity = new po.world_simulator.entities.animals.Turtle(position); break;
+                case "Antelope": newEntity = new po.world_simulator.entities.animals.Antelope(position); break;
+                case "Grass": newEntity = new po.world_simulator.entities.plants.Grass(position); break;
+                case "Milkweed": newEntity = new po.world_simulator.entities.plants.Milkweed(position); break;
+                case "Guarana": newEntity = new po.world_simulator.entities.plants.Guarana(position); break;
+                case "Wolfberries": newEntity = new po.world_simulator.entities.plants.Wolfberries(position); break;
+                case "SosnowskiHogweed": newEntity = new po.world_simulator.entities.plants.SosnowskiHogweed(position); break;
+            }
+
+            if (newEntity != null) {
+                World.getInstance().addNewEntity(newEntity);
+                addToLog("Added " + selected + " at (" + position.x + ", " + position.y + ")");
+                World.getInstance().forceDrawAll();
+            }
+        }
+    }
 }

@@ -5,17 +5,42 @@ import java.util.List;
 import po.world_simulator.entities.Entity;
 
 public class Map {
-    private final Vector2[] tileNeighbours = {
-        new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1),
-        new Vector2(-1, 0),                      new Vector2(1, 0),
-        new Vector2(-1, 1),  new Vector2(0, 1),  new Vector2(1, 1)
-    };
+
+    private final Vector2[][] tileNeighbours;
 
     private Entity[][] map;
     private Vector2 size;
 
-    public Map(Vector2 mapSize) {
+    public Map(Vector2 mapSize, boolean hexMode) {
         this.size = mapSize;
+        if(hexMode){
+            this.tileNeighbours = new Vector2[][]{
+                {
+                    new Vector2(-1, -1), new Vector2(0, -1),
+                    new Vector2(-1, 0), new Vector2(1, 0),
+                    new Vector2(-1, 1),  new Vector2(0, 1)
+                },
+                {
+                    new Vector2(0, -1), new Vector2(1, -1),
+                    new Vector2(-1, 0), new Vector2(1, 0),
+                    new Vector2(0, 1),  new Vector2(1, 1)
+                }
+            };
+        }
+        else{
+            this.tileNeighbours = new Vector2[][]{
+                {
+                    new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1),
+                    new Vector2(-1, 0),                      new Vector2(1, 0),
+                    new Vector2(-1, 1),  new Vector2(0, 1),  new Vector2(1, 1)
+                },
+                {
+                    new Vector2(-1, -1), new Vector2(0, -1), new Vector2(1, -1),
+                    new Vector2(-1, 0),                      new Vector2(1, 0),
+                    new Vector2(-1, 1),  new Vector2(0, 1),  new Vector2(1, 1)
+                }
+            };
+        }
         // W Javie używamy tablic 2D (lub list), inicjalizują się na null domyślnie
         this.map = new Entity[size.x][size.y];
     }
@@ -76,7 +101,7 @@ public class Map {
     private List<Vector2> getNeighbours(Vector2 position, boolean onlyFreeTiles, boolean onlyOccupiedTiles) {
         List<Vector2> tiles = new ArrayList<>();
 
-        for (Vector2 direction : tileNeighbours) {
+        for (Vector2 direction : tileNeighbours[position.y % 2]) {
             Vector2 neighbour = position.add(direction);
             if (isTileOutOfBounds(neighbour)) continue;
 

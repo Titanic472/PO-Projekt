@@ -17,6 +17,7 @@ public class World {
     private PriorityQueue<Entity> nextTurnEntities;
 
     private Vector2 worldSize;
+    private Boolean isHexMode;
 
     private po.world_simulator.Map map;
     private Renderer renderer;
@@ -25,11 +26,15 @@ public class World {
     private static World instance;
     private Random random = new Random();
 
-    public World() {
+    public World(boolean hexMode) {
         worldSize = new Vector2(Config.MAP_SIZE_X, Config.MAP_SIZE_Y);
+        this.isHexMode = hexMode;
 
-        this.map = new po.world_simulator.Map(worldSize);
-        this.renderer = new RendererHex(worldSize);
+        this.map = new po.world_simulator.Map(worldSize, hexMode);
+        if(hexMode)
+            this.renderer = new RendererHex(worldSize);
+        else
+            this.renderer = new Renderer(worldSize);
         this.inputManager = new InputManager();
 
         if (instance != null) {
@@ -130,12 +135,21 @@ public class World {
         renderer.renderInfoWindow();
     }
 
+    public void forceDrawAll(){
+        // force push all entities that were already added
+        nextQueue();
+
+        // draw world with all entities added
+        drawWorld();
+    }
+
     public void save() {
         SaveParser parser = new SaveParser();
 
         parser.createFile(worldSize);
 
         parser.addEntry("world_size", DataFormat.TYPE_VECTOR2, worldSize.toString());
+        parser.addEntry("hex_mode", DataFormat.TYPE_BOOLEAN, isHexMode.toString());
 
         parser.startCategory("entities");
 
@@ -168,9 +182,10 @@ public class World {
         }
 
         worldSize = (Vector2)parser.loadEntry("world_size");
+        isHexMode = (boolean)parser.loadEntry("hex_mode");
 
         // clear previous world
-        map = new po.world_simulator.Map(worldSize);
+        map = new po.world_simulator.Map(worldSize, isHexMode);
         clearEntities();
 
         // load entities
@@ -200,6 +215,7 @@ public class World {
             queueToNext(entity);
         }
     }
+
 
     private void queueToNext(Entity entity) {
         if (entity.isAlive())

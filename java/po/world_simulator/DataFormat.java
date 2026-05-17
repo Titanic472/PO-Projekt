@@ -5,6 +5,7 @@ public class DataFormat {
     public static final String TYPE_FLOAT = "f";
     public static final String TYPE_STRING = "s";
     public static final String TYPE_VECTOR2 = "v2";
+    public static final String TYPE_BOOLEAN = "b";
 
     public static final char CATEGORY_START_HEADER = '{';
     public static final char CATEGORY_END_HEADER = '}';
