@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Config {
     public static final int MAP_SIZE_X = 20;
-    public static final int MAP_SIZE_Y = 10;
+    public static final int MAP_SIZE_Y = 20;
     public static final int STATUS_WIDTH = 25;
 
     public static final boolean HEX_ENABLED = true;
@@ -33,7 +33,8 @@ public class Config {
     public static final char SAVE = 's';
     public static final char LOAD = 'l';
 
-    // Opcje renderera / GUI
+    // renderer config
+    public static final int MAX_LOG_MESSAGES = 100;
     public static final int WINDOW_WIDTH = 1200;
     public static final int WINDOW_HEIGHT = 800;
     public static final Color BG_COLOR = new Color(240, 240, 240);

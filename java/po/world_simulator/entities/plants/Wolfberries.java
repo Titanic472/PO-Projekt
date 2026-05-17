@@ -1,6 +1,9 @@
 package po.world_simulator.entities.plants;
 
 import po.world_simulator.entities.Entity;
+
+import java.util.Map;
+
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
 import po.world_simulator.entities.Plant;
@@ -12,6 +15,13 @@ public class Wolfberries extends Plant {
 
     public Wolfberries(Vector2 position) {
         this(position, 0);
+    }
+
+    public Wolfberries(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("age"))
+        );
     }
 
     @Override

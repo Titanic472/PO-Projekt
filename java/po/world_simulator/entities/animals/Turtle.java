@@ -1,6 +1,9 @@
 package po.world_simulator.entities.animals;
 
 import po.world_simulator.entities.Entity;
+
+import java.util.Map;
+
 import po.world_simulator.Vector2;
 import po.world_simulator.entities.Animal;
 
@@ -11,6 +14,14 @@ public class Turtle extends Animal {
 
     public Turtle(Vector2 position) {
         this(position, 2, 0);
+    }
+
+    public Turtle(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("power")),
+            Integer.parseInt(entityData.get("age"))
+        );
     }
 
     @Override

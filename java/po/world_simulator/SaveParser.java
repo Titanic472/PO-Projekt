@@ -13,7 +13,7 @@ public class SaveParser {
         try {
             File f = new File(fileName);
             f.getParentFile().mkdirs();
-            writer = new BufferedWriter(new FileWriter(f, false)); // trunc
+            writer = new BufferedWriter(new FileWriter(f, false));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,7 +160,8 @@ public class SaveParser {
             String line = reader.readLine();
             if (line == null || line.trim().isEmpty() || line.charAt(0) == DataFormat.CATEGORY_END_HEADER) {
                 return false;
-            } else {
+            }
+            else {
                 // To wyciąga get_next_value_from_string(line) i sprawdza resztę. Zgodnie z C++, line po resekcji:
                 // entry_data["type"] = get_next_value_from_string(line) i pozostaje "{".
                 String[] parts = parseLine(line);

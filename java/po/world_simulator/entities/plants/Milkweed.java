@@ -1,5 +1,7 @@
 package po.world_simulator.entities.plants;
 
+import java.util.Map;
+
 import po.world_simulator.Config;
 import po.world_simulator.Vector2;
 import po.world_simulator.entities.Plant;
@@ -11,6 +13,13 @@ public class Milkweed extends Plant {
 
     public Milkweed(Vector2 position) {
         this(position, 0);
+    }
+
+    public Milkweed(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("age"))
+        );
     }
 
     @Override

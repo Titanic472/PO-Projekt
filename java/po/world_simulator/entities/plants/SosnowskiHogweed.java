@@ -1,12 +1,13 @@
 package po.world_simulator.entities.plants;
 
+import java.util.List;
+import java.util.Map;
+
 import po.world_simulator.entities.Entity;
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
 import po.world_simulator.entities.Animal;
 import po.world_simulator.entities.Plant;
-
-import java.util.List;
 
 public class SosnowskiHogweed extends Plant {
     public SosnowskiHogweed(Vector2 position, int age) {
@@ -15,6 +16,13 @@ public class SosnowskiHogweed extends Plant {
 
     public SosnowskiHogweed(Vector2 position) {
         this(position, 0);
+    }
+
+    public SosnowskiHogweed(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("age"))
+        );
     }
 
     @Override

@@ -182,10 +182,16 @@ public class World {
         }
 
         worldSize = (Vector2)parser.loadEntry("world_size");
-        isHexMode = (boolean)parser.loadEntry("hex_mode");
+        boolean hexMode = (boolean)parser.loadEntry("hex_mode");
+
 
         // clear previous world
         map = new po.world_simulator.Map(worldSize, isHexMode);
+        // reload renderer if save contains different grid mode
+        if(hexMode != isHexMode){
+            renderer.dispose();
+            renderer = hexMode ? new RendererHex(worldSize) : new Renderer(worldSize);
+        }
         clearEntities();
 
         // load entities
@@ -267,12 +273,10 @@ public class World {
         for (String pkg : packages) {
             try {
                 Class<?> clazz = Class.forName(pkg + type);
-                System.out.println(pkg + type);
-                Entity entity = (Entity) clazz.getDeclaredConstructor(Map.class).newInstance(new Vector2(0, 0));
+                Entity entity = (Entity) clazz.getDeclaredConstructor(Map.class).newInstance(entityData);
                 addNewEntity(entity);
                 return;
             } catch (Exception ignored) {
-                // Wyjątek oznacza, że klasy tu nie ma, kontynuujemy z kolejnym pakietem
             }
         }
 

@@ -102,20 +102,20 @@ public class Renderer {
         statusPanel.setPreferredSize(new Dimension(statusWidth, Config.WINDOW_HEIGHT));
         statusPanel.setBorder(new LineBorder(Color.BLACK, 2));
 
-        // Górna sekcja statusu
+        // upper status panel with buttons and info
         JPanel topStatusPanel = new JPanel();
         topStatusPanel.setLayout(new BoxLayout(topStatusPanel, BoxLayout.Y_AXIS));
 
-        // Przyciski (B1 i B2)
+        // B1 and B2(Save and Load) buttons
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         btnSave = new JButton("Save");
         btnLoad = new JButton("Load");
-        btnSave.setFocusable(false); // Unikamy zabierania focusu fizycznej klawiaturze
+        btnSave.setFocusable(false);
         btnLoad.setFocusable(false);
         buttonsPanel.add(btnSave);
         buttonsPanel.add(btnLoad);
 
-        // Informacje / Tekst
+        // info
         lblNextAction = new JLabel("next action: ");
         lblCooldown = new JLabel("ability cooldown: ");
         lblEntities = new JLabel("entities: ");
@@ -129,7 +129,7 @@ public class Renderer {
         topStatusPanel.add(lblCooldown);
         topStatusPanel.add(lblEntities);
 
-        // Dolna sekcja logów
+        // log area
         JPanel mainLogPanel = new JPanel(new BorderLayout());
         JLabel logTitle = new JLabel("log:", SwingConstants.CENTER);
         logArea = new JTextArea();
@@ -149,20 +149,21 @@ public class Renderer {
         frame.setVisible(true);
     }
 
-    // Pozwala przypisać zewnętrzną metodę, np. od InputManagera / World
+    // bind new button action clearing previous
     public void bind(String buttonName, Runnable action) {
         if (buttonName.equalsIgnoreCase("Save") || buttonName.equalsIgnoreCase("B1")) {
-            // Czyść ewentualne stare bindy
-            for (var al : btnSave.getActionListeners()) btnSave.removeActionListener(al);
+            for (var al : btnSave.getActionListeners())
+                    btnSave.removeActionListener(al);
             btnSave.addActionListener(e -> action.run());
-        } else if (buttonName.equalsIgnoreCase("Load") || buttonName.equalsIgnoreCase("B2")) {
-            for (var al : btnLoad.getActionListeners()) btnLoad.removeActionListener(al);
+        }
+        else if (buttonName.equalsIgnoreCase("Load") || buttonName.equalsIgnoreCase("B2")) {
+            for (var al : btnLoad.getActionListeners())
+                    btnLoad.removeActionListener(al);
             btnLoad.addActionListener(e -> action.run());
         }
     }
 
     public void renderMap() {
-        // Swing automatycznie maluje, ale może nam to odświeżyć okno, gdy zmienimy setText
         mapPanel.repaint();
     }
 
@@ -207,14 +208,12 @@ public class Renderer {
 
     public void addToLog(String text) {
         logMessages.add(text);
-        // Zabezpieczenie by log się nie rozrastał w nieskończoność
-        if (logMessages.size() > 100) {
+        if (logMessages.size() > Config.MAX_LOG_MESSAGES) {
             logMessages.removeFirst();
         }
     }
 
     public void drawInfoWindow() {
-        // Logikę realizuje już złączone na stałe update w renderInfoWindow() dla Swinga
     }
 
     public void clearLog() {
@@ -255,11 +254,11 @@ public class Renderer {
             "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed"
         };
 
-        String message = "Pozycja pola: (" + position.x + ", " + position.y + ")\nWybierz obiekt do dodania:";
+        String message = "Position: (" + position.x + ", " + position.y + ")\nChoose entity to add:";
         String selected = (String) JOptionPane.showInputDialog(
             frame,
             message,
-            "Dodaj Entity",
+            "Add Entity",
             JOptionPane.PLAIN_MESSAGE,
             null,
             entities,

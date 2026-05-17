@@ -101,7 +101,6 @@ public abstract class Entity implements Comparable<Entity> {
 
     protected Entity clone(Vector2 position) {
         try {
-            // [AI] Wykorzystanie mechanizmu refleksji Javy by odtworzyć obiekt ze wzorcowej klasy po getClass(). Wymaga to odpowiednio spreparowanego konstruktora pobierającego jedno-wymiarowy Vector2
             return this.getClass().getDeclaredConstructor(Vector2.class).newInstance(position);
         } catch (Exception e) {
             e.printStackTrace();

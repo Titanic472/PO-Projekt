@@ -15,6 +15,14 @@ public class Fox extends Animal {
         this(position, 3, 0);
     }
 
+    public Fox(java.util.Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("power")),
+            Integer.parseInt(entityData.get("age"))
+        );
+    }
+
     @Override
     public void action() {
         Map map = World.getMap();

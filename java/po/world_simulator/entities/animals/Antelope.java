@@ -1,6 +1,9 @@
 package po.world_simulator.entities.animals;
 
 import po.world_simulator.entities.Entity;
+
+import java.util.Map;
+
 import po.world_simulator.Vector2;
 import po.world_simulator.World;
 import po.world_simulator.entities.Animal;
@@ -12,6 +15,14 @@ public class Antelope extends Animal {
 
     public Antelope(Vector2 position) {
         this(position, 4, 0);
+    }
+
+    public Antelope(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("power")),
+            Integer.parseInt(entityData.get("age"))
+        );
     }
 
     @Override

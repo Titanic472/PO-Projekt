@@ -1,5 +1,7 @@
 package po.world_simulator.entities.animals;
 
+import java.util.Map;
+
 import po.world_simulator.Config;
 import po.world_simulator.DataFormat;
 import po.world_simulator.SaveParser;
@@ -24,6 +26,15 @@ public class Human extends Animal {
 
     public Human(Vector2 position) {
         this(position, 5, 0, 0);
+    }
+
+    public Human(Map<String, String> entityData){
+        this(
+            new Vector2(entityData.get("position")),
+            Integer.parseInt(entityData.get("power")),
+            Integer.parseInt(entityData.get("age")),
+            Integer.parseInt(entityData.get("abilityCooldown"))
+        );
     }
 
     public static Human getInstance() {
