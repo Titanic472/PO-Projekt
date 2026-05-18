@@ -93,7 +93,7 @@ public abstract class Entity implements Comparable<Entity> {
         Vector2 direction = World.getMap().getPossibleMoveDirection(this.position, true);
 
         if (!World.getMap().isTileOccupied(this.position.add(direction))) {
-            World.getRenderer().addToLog(this.name + " reproduced");
+            World.getRenderer().addToLog(this.name + " reproduced at " + get_position().to_string());
             World.getInstance().addNewEntity(clone(this.position.add(direction)));
         }
     }

@@ -76,7 +76,7 @@ void Entity::reproduce(){
     Vector2 direction = World::get_map()->get_possible_move_direction(this->position, true);
 
     if(not World::get_map()->is_tile_occupied(this->position + direction)){
-        World::get_renderer()->add_to_log(this->name + " reproduced");
+        World::get_renderer()->add_to_log(this->name + " reproduced at " + get_position().to_string());
         World::get_instance()->add_new_entity(clone(this->position + direction));
     }
 

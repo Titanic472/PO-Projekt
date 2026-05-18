@@ -14,8 +14,11 @@ void Fox::action(){
     if(
         collision_target == nullptr
         || collision_target->get_power() <= this->get_power()
-    )
-        Animal::action();
+    ){
+        Animal::move(move_direction);
+    }
+    age += 1;
+        
 }
 
 
