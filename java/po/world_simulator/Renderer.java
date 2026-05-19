@@ -1,15 +1,13 @@
 package po.world_simulator;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import po.world_simulator.entities.animals.Human;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import po.world_simulator.entities.animals.Human;
 
 public class Renderer {
     protected JFrame frame;
@@ -25,6 +23,8 @@ public class Renderer {
     protected JLabel lblCooldown;
     protected JLabel lblEntities;
     protected JTextArea logArea;
+    
+    protected KeyEventDispatcher keyEventDispatcher;
 
     protected LinkedList<String> logMessages = new LinkedList<>();
 
@@ -35,7 +35,7 @@ public class Renderer {
         frame.setLayout(new BorderLayout());
 
         // --- GLOBAL KEY LISTENER ---
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+        this.keyEventDispatcher = new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.getID() == KeyEvent.KEY_PRESSED) {
@@ -43,29 +43,25 @@ public class Renderer {
                     if (im == null) return false;
 
                     int code = e.getKeyCode();
-                    if (code == KeyEvent.VK_LEFT)
-                        im.pushInput(Config.LEFT);
-                    else if (code == KeyEvent.VK_RIGHT)
-                        im.pushInput(Config.RIGHT);
-                    else if (code == KeyEvent.VK_UP)
-                        im.pushInput(Config.UP);
-                    else if (code == KeyEvent.VK_DOWN)
-                        im.pushInput(Config.DOWN);
-                    else if (code == KeyEvent.VK_E)
-                        im.pushInput(Config.ABILITY);
-                    else if (code == KeyEvent.VK_N)
-                        im.pushInput(Config.NEW_TURN);
-                    else if (code == KeyEvent.VK_S)
-                        im.pushInput(Config.SAVE);
-                    else if (code == KeyEvent.VK_L)
-                        im.pushInput(Config.LOAD);
-                    else if (code == KeyEvent.VK_Q)
-                        im.pushInput(Config.QUIT);
+                    switch (code) {
+                        case KeyEvent.VK_LEFT -> im.pushInput(Config.LEFT);
+                        case KeyEvent.VK_RIGHT -> im.pushInput(Config.RIGHT);
+                        case KeyEvent.VK_UP -> im.pushInput(Config.UP);
+                        case KeyEvent.VK_DOWN -> im.pushInput(Config.DOWN);
+                        case KeyEvent.VK_E -> im.pushInput(Config.ABILITY);
+                        case KeyEvent.VK_N -> im.pushInput(Config.NEW_TURN);
+                        case KeyEvent.VK_S -> im.pushInput(Config.SAVE);
+                        case KeyEvent.VK_L -> im.pushInput(Config.LOAD);
+                        case KeyEvent.VK_Q -> im.pushInput(Config.QUIT);
+                        default -> {
+                        }
+                    }
                     renderInfoWindow();
                 }
                 return false;
             }
-        });
+        };
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this.keyEventDispatcher);
 
         // --- MAP PANEL ---
         mapPanel = new JPanel(new GridLayout(mapSize.y, mapSize.x));
@@ -222,25 +218,22 @@ public class Renderer {
     }
 
     public void dispose() {
+        if (this.keyEventDispatcher != null) {
+            KeyboardFocusManager.getCurrentKeyboardFocusManager().removeKeyEventDispatcher(this.keyEventDispatcher);
+        }
         frame.dispose();
     }
 
 
     public String convertInputToText(int input){
-    switch (input){
-    case Config.LEFT:
-        return "LEFT";
-    case Config.RIGHT:
-        return "RIGHT";
-    case Config.UP:
-        return "UP";
-    case Config.DOWN:
-        return "DOWN";
-    case Config.ABILITY:
-        return "ABILITY";
-    default:
-        return "";
-    }
+        return switch (input) {
+            case Config.LEFT -> "LEFT";
+            case Config.RIGHT -> "RIGHT";
+            case Config.UP -> "UP";
+            case Config.DOWN -> "DOWN";
+            case Config.ABILITY -> "ABILITY";
+            default -> "";
+        };
     }
 
     protected void showAddEntityDialog(Vector2 position) {
@@ -268,16 +261,16 @@ public class Renderer {
         if (selected != null && !selected.isEmpty()) {
             po.world_simulator.entities.Entity newEntity = null;
             switch (selected) {
-                case "Wolf": newEntity = new po.world_simulator.entities.animals.Wolf(position); break;
-                case "Sheep": newEntity = new po.world_simulator.entities.animals.Sheep(position); break;
-                case "Fox": newEntity = new po.world_simulator.entities.animals.Fox(position); break;
-                case "Turtle": newEntity = new po.world_simulator.entities.animals.Turtle(position); break;
-                case "Antelope": newEntity = new po.world_simulator.entities.animals.Antelope(position); break;
-                case "Grass": newEntity = new po.world_simulator.entities.plants.Grass(position); break;
-                case "Milkweed": newEntity = new po.world_simulator.entities.plants.Milkweed(position); break;
-                case "Guarana": newEntity = new po.world_simulator.entities.plants.Guarana(position); break;
-                case "Wolfberries": newEntity = new po.world_simulator.entities.plants.Wolfberries(position); break;
-                case "SosnowskiHogweed": newEntity = new po.world_simulator.entities.plants.SosnowskiHogweed(position); break;
+                case "Wolf" -> newEntity = new po.world_simulator.entities.animals.Wolf(position);
+                case "Sheep" -> newEntity = new po.world_simulator.entities.animals.Sheep(position);
+                case "Fox" -> newEntity = new po.world_simulator.entities.animals.Fox(position);
+                case "Turtle" -> newEntity = new po.world_simulator.entities.animals.Turtle(position);
+                case "Antelope" -> newEntity = new po.world_simulator.entities.animals.Antelope(position);
+                case "Grass" -> newEntity = new po.world_simulator.entities.plants.Grass(position);
+                case "Milkweed" -> newEntity = new po.world_simulator.entities.plants.Milkweed(position);
+                case "Guarana" -> newEntity = new po.world_simulator.entities.plants.Guarana(position);
+                case "Wolfberries" -> newEntity = new po.world_simulator.entities.plants.Wolfberries(position);
+                case "SosnowskiHogweed" -> newEntity = new po.world_simulator.entities.plants.SosnowskiHogweed(position);
             }
 
             if (newEntity != null) {

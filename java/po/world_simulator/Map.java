@@ -8,8 +8,8 @@ public class Map {
 
     private final Vector2[][] tileNeighbours;
 
-    private Entity[][] map;
-    private Vector2 size;
+    private final Entity[][] map;
+    private final Vector2 size;
 
     public Map(Vector2 mapSize, boolean hexMode) {
         this.size = mapSize;

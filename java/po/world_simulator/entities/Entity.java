@@ -1,9 +1,9 @@
 package po.world_simulator.entities;
 
-import po.world_simulator.Vector2;
-import po.world_simulator.World;
 import po.world_simulator.DataFormat;
 import po.world_simulator.SaveParser;
+import po.world_simulator.Vector2;
+import po.world_simulator.World;
 
 public abstract class Entity implements Comparable<Entity> {
     private boolean isDead = false;
@@ -93,7 +93,7 @@ public abstract class Entity implements Comparable<Entity> {
         Vector2 direction = World.getMap().getPossibleMoveDirection(this.position, true);
 
         if (!World.getMap().isTileOccupied(this.position.add(direction))) {
-            World.getRenderer().addToLog(this.name + " reproduced at " + get_position().to_string());
+            World.getRenderer().addToLog(this.name + " reproduced at " + getPosition().toString());
             World.getInstance().addNewEntity(clone(this.position.add(direction)));
         }
     }

@@ -1,14 +1,13 @@
 package po.world_simulator;
 
-import java.util.PriorityQueue;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.function.Function;
-
-import po.world_simulator.entities.plants.*;
-import po.world_simulator.entities.animals.*;
 import po.world_simulator.entities.Entity;
+import po.world_simulator.entities.animals.*;
+import po.world_simulator.entities.plants.*;
 
 public class World {
     // [AI] C++ std::priority_queue jest max-heap, domyślna w Javie to min-heap.
@@ -31,10 +30,7 @@ public class World {
         this.isHexMode = hexMode;
 
         this.map = new po.world_simulator.Map(worldSize, hexMode);
-        if(hexMode)
-            this.renderer = new RendererHex(worldSize);
-        else
-            this.renderer = new Renderer(worldSize);
+        loadRenderer();
         this.inputManager = new InputManager();
 
         if (instance != null) {
@@ -74,6 +70,16 @@ public class World {
 
     public static int getEntityCount() {
         return instance.entities.size();
+    }
+
+    private void loadRenderer(){
+        if(renderer != null)
+            renderer.dispose();
+        renderer = isHexMode ? new RendererHex(worldSize) : new Renderer(worldSize);
+
+        // bind buttons
+        renderer.bind("Save", () -> World.getInputManager().pushInput((int) Config.SAVE));
+        renderer.bind("Load", () -> World.getInputManager().pushInput((int) Config.LOAD));
     }
 
     public boolean performTurn() {
@@ -184,13 +190,12 @@ public class World {
         worldSize = (Vector2)parser.loadEntry("world_size");
         boolean hexMode = (boolean)parser.loadEntry("hex_mode");
 
-
         // clear previous world
         map = new po.world_simulator.Map(worldSize, isHexMode);
         // reload renderer if save contains different grid mode
         if(hexMode != isHexMode){
-            renderer.dispose();
-            renderer = hexMode ? new RendererHex(worldSize) : new Renderer(worldSize);
+            isHexMode = hexMode;
+            loadRenderer();
         }
         clearEntities();
 
