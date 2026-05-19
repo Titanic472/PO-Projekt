@@ -41,7 +41,6 @@ public class Map {
                 }
             };
         }
-        // W Javie używamy tablic 2D (lub list), inicjalizują się na null domyślnie
         this.map = new Entity[size.x][size.y];
     }
 

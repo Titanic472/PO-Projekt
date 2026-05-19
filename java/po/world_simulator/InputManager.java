@@ -17,7 +17,6 @@ public class InputManager {
     public void readNextInput() {
         newTurnPressed = false;
         try {
-            // [AI] Blokowanie głównego wątku pętli aż GUI dorzuci klawisz do kolejki
             int input = inputQueue.take();
 
             if (input == Config.NEW_TURN) {
