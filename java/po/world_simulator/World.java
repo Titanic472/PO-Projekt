@@ -10,8 +10,6 @@ import po.world_simulator.entities.animals.*;
 import po.world_simulator.entities.plants.*;
 
 public class World {
-    // [AI] C++ std::priority_queue jest max-heap, domyślna w Javie to min-heap.
-    // [AI] By odzwierciedlić najwyższą inicjatywę na szczycie, musimy upewnić się, że compareTo jest odpowiednio zaimplementowane albo użyć Collections.reverseOrder()
     private PriorityQueue<Entity> entities;
     private PriorityQueue<Entity> nextTurnEntities;
 
@@ -269,7 +267,6 @@ public class World {
     public void loadEntity(Map<String, String> entityData) {
         String type = entityData.get("type");
 
-        // Szukamy klasy po jej nazwie względem konkretnego pakietu
         String[] packages = {
             "po.world_simulator.entities.animals.",
             "po.world_simulator.entities.plants."
@@ -288,7 +285,7 @@ public class World {
         renderer.addToLog("UNKNOWN ENTITY TYPE: " + type);
     }
 
-    // Ręczne ubijanie kolejek by pomóc Garbage Collectorowi lub zlikwidować wiszące zasoby.
+
     private void clearEntities() {
         while (!entities.isEmpty()) {
             Entity entity = entities.poll();

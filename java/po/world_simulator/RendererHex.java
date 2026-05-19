@@ -25,7 +25,6 @@ public class RendererHex extends Renderer {
         hexMapPanel = new HexPanel(mapSize);
         frame.add(hexMapPanel, BorderLayout.CENTER);
 
-        // Odświeżamy ramkę po zmianach panelu
         frame.revalidate();
         frame.repaint();
     }

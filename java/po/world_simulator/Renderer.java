@@ -56,7 +56,7 @@ public class Renderer {
                         default -> {
                         }
                     }
-                    renderInfoWindow();
+                    // renderInfoWindow();
                 }
                 return false;
             }

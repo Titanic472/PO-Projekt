@@ -26,7 +26,6 @@ public abstract class Entity implements Comparable<Entity> {
         this(power, initiative, position, name, 0);
     }
 
-    // [AI] Ręczne usuwanie / sprzątanie by odciążyć powiązania
     public void dispose() {
     }
 
@@ -80,7 +79,6 @@ public abstract class Entity implements Comparable<Entity> {
     }
 
     public String saveAsString(SaveParser parser) {
-        // [AI] Wykorzystanie parsera zapisu, wymaga dopasowania do jawnego przekazywania argumentów w Javie
         String data = "";
         data += parser.stringifyEntry(this.getClass().getSimpleName(), DataFormat.CATEGORY_START_HEADER);
         data += parser.stringifyEntry("position", DataFormat.TYPE_VECTOR2, this.position.toString());

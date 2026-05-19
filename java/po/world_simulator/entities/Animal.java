@@ -19,7 +19,6 @@ public abstract class Animal extends Entity {
 
     @Override
     public void action() {
-        // [AI] Wywoływane akcje - do implementacji wg konkretnej logiki c++ (losowy kierunek itp)
         Vector2 moveDirection = World.getMap().getPossibleMoveDirection(this.position, false);
         if (!moveDirection.equals(Vector2.ZERO)) {
             move(moveDirection);

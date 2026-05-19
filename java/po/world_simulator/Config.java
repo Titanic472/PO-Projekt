@@ -3,11 +3,11 @@ package po.world_simulator;
 import java.awt.Color;
 
 public class Config {
-    public static final int MAP_SIZE_X = 20;
-    public static final int MAP_SIZE_Y = 20;
+    public static final int MAP_SIZE_X = 200;
+    public static final int MAP_SIZE_Y = 200;
     public static final int STATUS_WIDTH = 25;
 
-    public static final boolean HEX_ENABLED = true;
+    public static final boolean HEX_ENABLED = false;
 
     public static final int GRASS_AMOUNT = 10;
     public static final int MILKWEED_AMOUNT = 8;

@@ -154,7 +154,6 @@ public class SaveParser {
         return false;
     }
 
-    // [AI] Zastępuje wskaźnikowe mapowanie
     public boolean loadEntryMultiline(Map<String, String> entryData) {
         try {
             String line = reader.readLine();
@@ -162,8 +161,6 @@ public class SaveParser {
                 return false;
             }
             else {
-                // To wyciąga get_next_value_from_string(line) i sprawdza resztę. Zgodnie z C++, line po resekcji:
-                // entry_data["type"] = get_next_value_from_string(line) i pozostaje "{".
                 String[] parts = parseLine(line);
                 if (parts.length > 0) {
                     entryData.put("type", parts[0]);
