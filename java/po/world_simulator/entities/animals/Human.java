@@ -1,7 +1,6 @@
 package po.world_simulator.entities.animals;
 
 import java.util.Map;
-
 import po.world_simulator.Config;
 import po.world_simulator.DataFormat;
 import po.world_simulator.SaveParser;

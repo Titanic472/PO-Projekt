@@ -3,11 +3,11 @@ package po.world_simulator;
 import java.awt.Color;
 
 public class Config {
-    public static final int MAP_SIZE_X = 200;
-    public static final int MAP_SIZE_Y = 200;
+    public static final int MAP_SIZE_X = 20;
+    public static final int MAP_SIZE_Y = 20;
     public static final int STATUS_WIDTH = 25;
 
-    public static final boolean HEX_ENABLED = false;
+    public static final boolean HEX_ENABLED = true;
 
     public static final int GRASS_AMOUNT = 10;
     public static final int MILKWEED_AMOUNT = 8;
@@ -38,9 +38,9 @@ public class Config {
     public static final int WINDOW_WIDTH = 1200;
     public static final int WINDOW_HEIGHT = 800;
     public static final Color BG_COLOR = new Color(240, 240, 240);
-    public static final Color DEFAULT_GRID_BG_COLOR = Color.WHITE;
+    public static final Color DEFAULT_GRID_BG_COLOR = Color.black;
     public static final Color BORDER_COLOR = Color.LIGHT_GRAY;
-    public static final int BORDER_THICKNESS = 1;
-    public static final Color TEXT_COLOR = Color.BLACK;
+    public static final int BORDER_THICKNESS = 4;
+    public static final Color TEXT_COLOR = Color.WHITE;
     public static final int BLOCK_FONT_SIZE = 24;
 }
