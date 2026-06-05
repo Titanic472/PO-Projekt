@@ -1,6 +1,7 @@
 import heapq
 import random
 import importlib
+import sys
 
 from .Vector2 import Vector2
 from .Config import Config
@@ -92,10 +93,9 @@ class World:
                 # skip turn after loading
                 return True
 
-            if self.renderer:
-                # redraw info window to show pressed input
-                self.renderer.drawInfoWindow()
-                self.renderer.renderInfoWindow()
+            # redraw info window to show pressed input
+            self.renderer.drawInfoWindow()
+            self.renderer.renderInfoWindow()
 
             if self.inputManager.isNewTurnPressed():
                 break

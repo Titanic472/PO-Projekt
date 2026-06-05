@@ -221,12 +221,41 @@ class Renderer:
             "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed"
         ]
 
-        # [AI] Using simpledialog.askstring instead of JOptionPane to select entity
-        selected = tk.simpledialog.askstring(
-            "Add Entity",
-            f"Position: ({position.x}, {position.y})\nChoose entity to add:\n" + ", ".join(entities_list),
-            parent=self.frame
-        )
+        # [AI] Using custom dialog with OptionMenu to select entity
+        dialog = tk.Toplevel(self.frame)
+        dialog.title("Add Entity")
+        dialog.transient(self.frame)
+        dialog.grab_set()
+
+        tk.Label(dialog, text=f"Position: ({position.x}, {position.y})\nChoose entity to add:").pack(pady=10, padx=20)
+
+        selected_entity = tk.StringVar(dialog)
+        selected_entity.set(entities_list[0])
+
+        tk.OptionMenu(dialog, selected_entity, *entities_list).pack(pady=5, padx=20)
+
+        result = [None]
+
+        def on_ok():
+            result[0] = selected_entity.get()
+            dialog.destroy()
+
+        def on_cancel():
+            dialog.destroy()
+
+        btn_frame = tk.Frame(dialog)
+        btn_frame.pack(pady=10)
+        tk.Button(btn_frame, text="OK", command=on_ok, width=10).pack(side=tk.LEFT, padx=5)
+        tk.Button(btn_frame, text="Cancel", command=on_cancel, width=10).pack(side=tk.LEFT, padx=5)
+
+        # [AI] Center the dialog relative to the main window
+        dialog.update_idletasks()
+        x = self.frame.winfo_x() + (self.frame.winfo_width() // 2) - (dialog.winfo_width() // 2)
+        y = self.frame.winfo_y() + (self.frame.winfo_height() // 2) - (dialog.winfo_height() // 2)
+        dialog.geometry(f"+{x}+{y}")
+
+        self.frame.wait_window(dialog)
+        selected = result[0]
 
         # [AI] Validate selected string
         if selected and selected in entities_list:

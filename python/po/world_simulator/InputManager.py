@@ -12,8 +12,11 @@ class InputManager:
 
     def readNextInput(self):
         self.newTurnPressed = False
-        # [AI] Removed try-catch since queue.get is thread-safe and blocking
-        input_val = self.inputQueue.get()
+
+        try:
+            input_val = self.inputQueue.get(block=False)
+        except queue.Empty:
+            return
 
         if input_val == Config.NEW_TURN:
             self.newTurnPressed = True

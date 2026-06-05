@@ -5,11 +5,11 @@ class Color: # [AI] Simple color class to replace java.awt.Color
         self.b = b
 
 class Config:
-    MAP_SIZE_X = 5
-    MAP_SIZE_Y = 5
+    MAP_SIZE_X = 20
+    MAP_SIZE_Y = 20
     STATUS_WIDTH = 25
 
-    HEX_ENABLED = False
+    HEX_ENABLED = True
 
     GRASS_AMOUNT = 10
     MILKWEED_AMOUNT = 8
@@ -25,15 +25,15 @@ class Config:
 
     PLANTS_SPREAD_CHANCE = 5
 
-    QUIT = 'q'
+    QUIT = ord('q')
     LEFT = 255 + 68
     RIGHT = 255 + 67
     UP = 255 + 65
     DOWN = 255 + 66
-    ABILITY = 'e'
-    NEW_TURN = 'n'
-    SAVE = 's'
-    LOAD = 'l'
+    ABILITY = ord('e')
+    NEW_TURN = ord('n')
+    SAVE = ord('s')
+    LOAD = ord('l')
 
     # renderer config
     MAX_LOG_MESSAGES = 100

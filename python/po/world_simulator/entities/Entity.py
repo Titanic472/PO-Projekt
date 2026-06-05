@@ -77,7 +77,7 @@ class Entity:
 
     def clone(self, position):
         try:
-            return type(self)(position=position) # [AI] creating new object of same type
+            return type(self)(position) # [AI] creating new object of same type
         except Exception as e:
             print(e)
             return None
