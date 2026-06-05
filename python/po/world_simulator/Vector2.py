@@ -32,4 +32,4 @@ class Vector2:
         self.x *= scale
         self.y *= scale
 
-Vector2.ZERO = Vector2(0, 0) # [AI] Added static ZERO after class definition
+Vector2.ZERO = Vector2(0, 0)
