@@ -10,6 +10,19 @@ from .InputManager import InputManager
 from .SaveParser import SaveParser
 from .DataFormat import DataFormat
 
+from po.world_simulator.entities.animals.Human import Human
+from po.world_simulator.entities.plants.Grass import Grass
+from po.world_simulator.entities.plants.Milkweed import Milkweed
+from po.world_simulator.entities.plants.Guarana import Guarana
+from po.world_simulator.entities.plants.Wolfberries import Wolfberries
+from po.world_simulator.entities.plants.SosnowskiHogweed import SosnowskiHogweed
+from po.world_simulator.entities.animals.Wolf import Wolf
+from po.world_simulator.entities.animals.Sheep import Sheep
+from po.world_simulator.entities.animals.Fox import Fox
+from po.world_simulator.entities.animals.Turtle import Turtle
+from po.world_simulator.entities.animals.Antelope import Antelope
+from po.world_simulator.entities.animals.CyberSheep import CyberSheep
+
 class World:
     instance = None
 
@@ -27,8 +40,9 @@ class World:
 
         World.instance = self
 
-        # [AI] Using list for PriorityQueue. Will use heapq module for ops.
+        # Using list for PriorityQueue. Will use heapq module for ops.
         self.entities = []
+        self.hogweed: list[SosnowskiHogweed] = []
         self.nextTurnEntities = []
 
         self.createEntities()
@@ -59,6 +73,10 @@ class World:
     @staticmethod
     def getEntityCount():
         return len(World.instance.entities)
+
+    @staticmethod
+    def getHogweed() -> list[SosnowskiHogweed]:
+        return World.instance.hogweed
 
     def loadRenderer(self):
         if self.renderer is not None:
@@ -227,24 +245,15 @@ class World:
             entity.dispose()
 
     def nextQueue(self):
-        for e in self.nextTurnEntities:
-            heapq.heappush(self.entities, e)
+        self.hogweed.clear()
+        for entity in self.nextTurnEntities:
+            heapq.heappush(self.entities, entity)
+            if isinstance(entity, SosnowskiHogweed):
+                self.hogweed.append(entity)
         self.nextTurnEntities.clear()
 
     def createEntities(self):
         worldArea = self.worldSize.x * self.worldSize.y
-
-        from po.world_simulator.entities.animals.Human import Human
-        from po.world_simulator.entities.plants.Grass import Grass
-        from po.world_simulator.entities.plants.Milkweed import Milkweed
-        from po.world_simulator.entities.plants.Guarana import Guarana
-        from po.world_simulator.entities.plants.Wolfberries import Wolfberries
-        from po.world_simulator.entities.plants.SosnowskiHogweed import SosnowskiHogweed
-        from po.world_simulator.entities.animals.Wolf import Wolf
-        from po.world_simulator.entities.animals.Sheep import Sheep
-        from po.world_simulator.entities.animals.Fox import Fox
-        from po.world_simulator.entities.animals.Turtle import Turtle
-        from po.world_simulator.entities.animals.Antelope import Antelope
 
         self.addNewEntity(Human(self.worldSize.multiply(0.5)))
 
@@ -258,6 +267,7 @@ class World:
         self.randomizeEntities(Fox, worldArea, Config.FOX_AMOUNT)
         self.randomizeEntities(Turtle, worldArea, Config.TURTLE_AMOUNT)
         self.randomizeEntities(Antelope, worldArea, Config.ANTELOPE_AMOUNT)
+        self.randomizeEntities(CyberSheep, worldArea, Config.CYBER_SHEEP_AMOUNT)
 
         self.nextQueue()
 

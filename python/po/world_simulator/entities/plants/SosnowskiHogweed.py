@@ -15,7 +15,7 @@ class SosnowskiHogweed(Plant):
         entities = world_module.World.getMap().getEntitiesAround(self.position)
 
         for entity in entities:
-            if isinstance(entity, Animal):
+            if isinstance(entity, Animal) and not isinstance(entity, CyberSheep):
                 entity.kill()
                 world_module.World.getRenderer().addToLog(self.getName() + " killed " + entity.getName())
 

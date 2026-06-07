@@ -5,6 +5,7 @@ import collections
 from po.world_simulator.Config import Config
 from po.world_simulator.Vector2 import Vector2
 import po.world_simulator.World as world_module
+from po.world_simulator.entities.animals.Human import Human
 
 # [AI] Helper function to convert our custom Color class to tkinter hex colors
 def get_hex_color(color):
@@ -147,14 +148,10 @@ class Renderer:
         button_text += self.convertInputToText(world_module.World.getInputManager().getLastInput())
         self.lblNextAction.config(text=button_text)
 
-        human = world_module.World.getInstance().entities # [AI] Finding human directly might require instance search or modifying Human logic. Java had Human.getInstance().
+        human = Human.getInstance()
 
-        # [AI] We can resolve Human module to get its instance
-        from po.world_simulator.entities.animals.Human import Human
-        human_instance = Human.getInstance()
-
-        if human_instance is not None:
-            self.lblCooldown.config(text=f"ability cooldown: {human_instance.getAbilityCooldown()}")
+        if human is not None:
+            self.lblCooldown.config(text=f"ability cooldown: {human.getAbilityCooldown()}")
         else:
             self.lblCooldown.config(text="Human died :(")
 
@@ -179,7 +176,7 @@ class Renderer:
     def drawMap(self, mapSize):
         for y in range(mapSize.y):
             for x in range(mapSize.x):
-                self.gridLabels[y][x].config(text="")
+                self.gridLabels[y][x].config(text=" ")
 
     def addToLog(self, text):
         self.logMessages.append(text)
@@ -218,7 +215,7 @@ class Renderer:
 
         entities_list = [
             "Wolf", "Sheep", "Fox", "Turtle", "Antelope",
-            "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed"
+            "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed", "CyberSheep"
         ]
 
         # [AI] Using custom dialog with OptionMenu to select entity
@@ -262,7 +259,7 @@ class Renderer:
             newEntity = None
             try:
                 # Same strategy as World string loader
-                if selected in ["Wolf", "Sheep", "Fox", "Turtle", "Antelope", "Human"]:
+                if selected in ["Wolf", "Sheep", "Fox", "Turtle", "Antelope", "Human", "CyberSheep"]:
                     import importlib
                     module = importlib.import_module(f"po.world_simulator.entities.animals.{selected}")
                     clazz = getattr(module, selected)

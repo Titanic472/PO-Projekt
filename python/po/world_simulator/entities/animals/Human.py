@@ -7,7 +7,6 @@ import po.world_simulator.World as world_module
 class Human(Animal):
     instance = None
 
-    # [AI] Merged constructors
     def __init__(self, position_or_data, power=5, age=0, abilityCooldown=0):
         if isinstance(position_or_data, dict):
             super().__init__(
