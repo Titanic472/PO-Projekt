@@ -1,5 +1,5 @@
 class Vector2:
-    def __init__(self, x=0, y=0): # [AI] Merged constructors and String constructor
+    def __init__(self, x=0, y=0):
         if isinstance(x, str):
             pos = x.find('_')
             self.x = int(x[:pos])
@@ -32,4 +32,4 @@ class Vector2:
         self.x *= scale
         self.y *= scale
 
-Vector2.ZERO = Vector2(0, 0) # [AI] Added static ZERO after class definition
+Vector2.ZERO = Vector2(0, 0)

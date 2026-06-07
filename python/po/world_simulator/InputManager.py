@@ -5,10 +5,10 @@ class InputManager:
     def __init__(self):
         self.lastInput = 0
         self.newTurnPressed = False
-        self.inputQueue = queue.Queue() # [AI] Replaced LinkedBlockingQueue with queue.Queue
+        self.inputQueue = queue.Queue()
 
     def pushInput(self, input_val):
-        self.inputQueue.put(input_val) # [AI] replaced offer with put
+        self.inputQueue.put(input_val)
 
     def readNextInput(self):
         self.newTurnPressed = False

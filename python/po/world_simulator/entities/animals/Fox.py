@@ -3,7 +3,6 @@ from po.world_simulator.Vector2 import Vector2
 import po.world_simulator.World as world_module
 
 class Fox(Animal):
-    # [AI] Merged constructors.
     def __init__(self, position_or_data, power=3, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(

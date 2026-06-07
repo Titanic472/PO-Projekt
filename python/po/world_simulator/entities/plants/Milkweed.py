@@ -4,7 +4,6 @@ from po.world_simulator.Vector2 import Vector2
 from po.world_simulator.Config import Config
 
 class Milkweed(Plant):
-    # [AI] Merged constructors.
     def __init__(self, position_or_data, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(0, Vector2(position_or_data.get("position")), "milkweed", int(position_or_data.get("age", 0)))

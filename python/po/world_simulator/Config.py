@@ -1,4 +1,4 @@
-class Color: # [AI] Simple color class to replace java.awt.Color
+class Color:
     def __init__(self, r, g, b):
         self.r = r
         self.g = g
@@ -40,8 +40,8 @@ class Config:
     WINDOW_WIDTH = 1200
     WINDOW_HEIGHT = 800
     BG_COLOR = Color(240, 240, 240)
-    DEFAULT_GRID_BG_COLOR = Color(0, 0, 0) # [AI] Replaced Color.black with RGB
-    BORDER_COLOR = Color(192, 192, 192) # [AI] Replaced Color.LIGHT_GRAY
+    DEFAULT_GRID_BG_COLOR = Color(0, 0, 0)
+    BORDER_COLOR = Color(192, 192, 192)
     BORDER_THICKNESS = 4
-    TEXT_COLOR = Color(255, 255, 255) # [AI] Replaced Color.WHITE
+    TEXT_COLOR = Color(255, 255, 255)
     BLOCK_FONT_SIZE = 24

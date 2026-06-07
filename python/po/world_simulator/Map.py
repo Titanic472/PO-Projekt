@@ -30,8 +30,7 @@ class Map:
                     Vector2(-1, 1),  Vector2(0, 1),  Vector2(1, 1)
                 ]
             ]
-        
-        # [AI] List of lists representing a 2D array, initialized to None
+
         self.map = [[None for _ in range(self.size.y)] for _ in range(self.size.x)]
 
     def getEntityAt(self, position):

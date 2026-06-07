@@ -3,7 +3,6 @@ from po.world_simulator.entities.Animal import Animal
 from po.world_simulator.Vector2 import Vector2
 
 class Turtle(Animal):
-    # [AI] Merged constructors.
     def __init__(self, position_or_data, power=2, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(

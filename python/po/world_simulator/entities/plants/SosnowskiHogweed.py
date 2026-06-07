@@ -1,10 +1,10 @@
 from po.world_simulator.entities.Plant import Plant
 from po.world_simulator.entities.Animal import Animal
+from po.world_simulator.entities.animals.CyberSheep import CyberSheep
 from po.world_simulator.Vector2 import Vector2
 import po.world_simulator.World as world_module
 
 class SosnowskiHogweed(Plant):
-    # [AI] Merged constructors.
     def __init__(self, position_or_data, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(10, Vector2(position_or_data.get("position")), "sosnowski hogweed", int(position_or_data.get("age", 0)))
@@ -22,6 +22,10 @@ class SosnowskiHogweed(Plant):
         super().action()
 
     def collision(self, otherEntity):
-        otherEntity.kill()
+        if not isinstance(otherEntity, CyberSheep):
+            otherEntity.kill()
+            world_module.World.getRenderer().addToLog(self.getName() + " killed " + otherEntity.getName() + " and died")
+        else:
+            world_module.World.getRenderer().addToLog(f"{self.name} collided with {otherEntity.name} and died")
         self.kill()
-        world_module.World.getRenderer().addToLog(self.getName() + " killed " + otherEntity.getName() + " and died")
+
