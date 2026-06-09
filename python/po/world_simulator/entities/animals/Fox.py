@@ -24,7 +24,6 @@ class Fox(Animal):
         collisionTarget = game_map.getEntityAt(self.position.add(moveDirection))
 
         if collisionTarget is None or collisionTarget.getPower() <= self.getPower():
-            super().action()
-            return
+            self.move(moveDirection)
 
         self.age += 1

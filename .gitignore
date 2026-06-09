@@ -1,2 +1,2 @@
 build/*
-# python/po/**/__pycache__
+python/po/**/__pycache__
