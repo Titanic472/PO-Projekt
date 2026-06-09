@@ -50,7 +50,7 @@ class World:
 
     def dispose(self):
         self.clearEntities()
-       self.renderer.dispose()
+        self.renderer.dispose()
         if World.instance == self:
             World.instance = None
 
@@ -226,7 +226,7 @@ class World:
             entityData.clear()
 
         self.nextQueue()
-        iself.renderer.addToLog("game loaded!")
+        self.renderer.addToLog("game loaded!")
 
 
     def addNewEntity(self, entity):
