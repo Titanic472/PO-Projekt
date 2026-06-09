@@ -9,6 +9,7 @@ class Wolfberries(Plant):
         else:
             super().__init__(99, position_or_data, "wolfberries", age)
 
+
     def collision(self, otherEntity):
         otherEntity.kill()
         self.kill()

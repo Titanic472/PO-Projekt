@@ -11,6 +11,7 @@ class SosnowskiHogweed(Plant):
         else:
             super().__init__(10, position_or_data, "sosnowski hogweed", age)
 
+
     def action(self):
         entities = world_module.World.getMap().getEntitiesAround(self.position)
 
@@ -20,6 +21,7 @@ class SosnowskiHogweed(Plant):
                 world_module.World.getRenderer().addToLog(self.getName() + " killed " + entity.getName())
 
         super().action()
+
 
     def collision(self, otherEntity):
         if not isinstance(otherEntity, CyberSheep):

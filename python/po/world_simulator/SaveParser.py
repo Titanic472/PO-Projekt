@@ -1,7 +1,7 @@
 import os
 from .Vector2 import Vector2
 from .DataFormat import DataFormat
-import po.world_simulator.World as world_module # [AI] Using module to avoid circular import
+import po.world_simulator.World as world_module
 
 class SaveParser:
     def __init__(self):
@@ -9,19 +9,22 @@ class SaveParser:
         self.writer = None
         self.fileName = ""
 
+
     def createFile(self, worldSize):
         self.fileName = "saves/" + str(worldSize) + ".save"
         try:
-            os.makedirs(os.path.dirname(self.fileName), exist_ok=True) # [AI] os.makedirs instead of f.getParentFile().mkdirs()
+            os.makedirs(os.path.dirname(self.fileName), exist_ok=True) 
             self.writer = open(self.fileName, "w")
         except IOError as e:
             print(e)
+
 
     def addEntry(self, key, type_str, value):
         try:
             self.writer.write(f"{key}:{type_str}:{value};\n")
         except IOError as e:
             print(e)
+
 
     def addStringEntry(self, value):
         try:
@@ -32,11 +35,13 @@ class SaveParser:
         except IOError as e:
             print(e)
 
+
     def startCategory(self, categoryName):
         try:
             self.writer.write(f"{categoryName}:{DataFormat.CATEGORY_START_HEADER}\n")
         except IOError as e:
             print(e)
+
 
     def endCategory(self):
         try:
@@ -44,10 +49,12 @@ class SaveParser:
         except IOError as e:
             print(e)
 
+
     def stringifyEntry(self, key, type_or_char, value=None):
         if value is None:
             return f"{key}{DataFormat.VALUE_SEPARATOR}{type_or_char}\n"
         return f"{key}{DataFormat.VALUE_SEPARATOR}{type_or_char}{DataFormat.VALUE_SEPARATOR}{value}{DataFormat.ENTRY_SEPARATOR}\n"
+
 
     def closeFile(self):
         try:
@@ -58,8 +65,10 @@ class SaveParser:
         except IOError as e:
             print(e)
 
+
     def fileExists(self, fileName):
         return os.path.exists(fileName)
+
 
     def loadFile(self, worldSize):
         self.fileName = "saves/" + str(worldSize) + ".save"
@@ -72,6 +81,7 @@ class SaveParser:
         except IOError as e:
             print(e)
             return False
+
 
     def loadEntry(self, key):
         try:
@@ -103,6 +113,7 @@ class SaveParser:
             print(e)
         return None
 
+
     def jumpToCategory(self, categoryName):
         try:
             for line in self.reader:
@@ -125,6 +136,7 @@ class SaveParser:
             print(e)
         return False
 
+
     def loadEntryMultiline(self, entryData):
         try:
             line = self.reader.readline()
@@ -144,7 +156,6 @@ class SaveParser:
                 line = self.reader.readline()
                 if not line:
                     break
-                # [AI] need to check if line without stripping has end header, java used line.trim().isEmpty() and line.charAt(0)
                 if not line.strip() or line[0] == DataFormat.CATEGORY_END_HEADER:
                     break
                 line = line.strip('\n')
@@ -159,9 +170,11 @@ class SaveParser:
             print(e)
         return False
 
+
     def parseLine(self, line):
         line = line.replace(DataFormat.ENTRY_SEPARATOR, "")
         return line.split(DataFormat.VALUE_SEPARATOR)
+
 
     def loadField(self, type_str, value):
         if type_str == DataFormat.TYPE_INT:
@@ -175,7 +188,6 @@ class SaveParser:
         elif type_str == DataFormat.TYPE_VECTOR2:
             return Vector2(value)
         elif type_str == DataFormat.TYPE_BOOLEAN:
-            # [AI] Java's Boolean.parseBoolean handles string matching
             return value.lower() == "true"
         else:
             world_module.World.getRenderer().addToLog("UNKNOWN TYPE: " + type_str)

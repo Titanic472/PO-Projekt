@@ -6,7 +6,7 @@ class Fox(Animal):
     def __init__(self, position_or_data, power=3, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(
-                int(position_or_data.get("power", 0)),
+                int(position_or_data.get("power", 3)),
                 7,
                 Vector2(position_or_data.get("position")),
                 "Fox",
@@ -15,6 +15,7 @@ class Fox(Animal):
             )
         else:
             super().__init__(power, 7, position_or_data, "Fox", age, True)
+
 
     def action(self):
         game_map = world_module.World.getMap()

@@ -23,36 +23,42 @@ class Map:
             self.tileNeighbours = [
                 [
                     Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
-                    Vector2(-1, 0),                      Vector2(1, 0),
+                    Vector2(-1, 0),                  Vector2(1, 0),
                     Vector2(-1, 1),  Vector2(0, 1),  Vector2(1, 1)
                 ],
                 [
                     Vector2(-1, -1), Vector2(0, -1), Vector2(1, -1),
-                    Vector2(-1, 0),                      Vector2(1, 0),
+                    Vector2(-1, 0),                  Vector2(1, 0),
                     Vector2(-1, 1),  Vector2(0, 1),  Vector2(1, 1)
                 ]
             ]
 
         self.map = [[None for _ in range(self.size.y)] for _ in range(self.size.x)]
 
+
     def getEntityAt(self, position):
         if self.isTileOutOfBounds(position):
             return None
         return self.map[position.x][position.y]
 
+
     def placeEntityAt(self, position, entity):
         if not self.isTileOutOfBounds(position):
             self.map[position.x][position.y] = entity
+
 
     def removeEntityAt(self, position):
         if not self.isTileOutOfBounds(position):
             self.map[position.x][position.y] = None
 
+
     def isTileOccupied(self, position):
         return not self.isTileOutOfBounds(position) and self.map[position.x][position.y] is not None
 
+
     def isTileOutOfBounds(self, position):
         return position.x < 0 or position.y < 0 or position.x >= self.size.x or position.y >= self.size.y
+
 
     def getPossibleMoveDirection(self, position, onlyFreeTiles):
         possibleMoves = self.getNeighbours(position, onlyFreeTiles, False)
@@ -63,6 +69,7 @@ class Map:
             movePosition = possibleMoves[int(random.random() * len(possibleMoves))]
             return Vector2(movePosition.x - position.x, movePosition.y - position.y)
 
+
     def getEntitiesAround(self, position):
         possibleMoves = self.getNeighbours(position, False, True)
         entities = []
@@ -71,16 +78,19 @@ class Map:
             entities.append(self.map[pos.x][pos.y])
         return entities
 
+
     def move(self, from_pos, to_pos):
         temp = self.map[to_pos.x][to_pos.y]
         self.map[to_pos.x][to_pos.y] = self.map[from_pos.x][from_pos.y]
         self.map[from_pos.x][from_pos.y] = temp
+
 
     def getNeighbours(self, position, onlyFreeTiles, onlyOccupiedTiles):
         tiles = []
 
         for direction in self.tileNeighbours[position.y % 2]:
             neighbour = position.add(direction)
+            
             if self.isTileOutOfBounds(neighbour):
                 continue
 
@@ -91,6 +101,7 @@ class Map:
                 or (onlyOccupiedTiles and occupant is not None)
             ):
                 tiles.append(neighbour)
+                
         return tiles
 
     # calculate total moves needed to get from from_pos to to_pos, assuming no obstacles
@@ -101,9 +112,10 @@ class Map:
             dx = from_pos.x - to_pos.x
             dy = abs(from_pos.y - to_pos.y)
             if from_pos.y % 2 == 0:
-                return dy + max(0, abs(dx) - (dy + 1 * math.copysign(1, dx))  // 2)
+                return dy + max(0, abs(dx) - (dy + 1 * math.copysign(1, dx)) // 2)
             else:
                 return dy + max(0, abs(dx) - dy // 2)
+
 
     def getMoveDirectionTowards(self, from_pos, to_pos):
         if not self.hexMode:

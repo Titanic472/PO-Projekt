@@ -7,11 +7,13 @@ class Animal(Entity):
         super().__init__(power, initiative, position, name, age)
         self.canKill = canKill
 
+
     def action(self):
         moveDirection = world_module.World.getMap().getPossibleMoveDirection(self.position, False)
         if moveDirection != Vector2.ZERO:
             self.move(moveDirection)
         self.age += 1
+
 
     def collision(self, otherEntity):
         if type(self) == type(otherEntity):
@@ -26,8 +28,10 @@ class Animal(Entity):
 
         super().collision(otherEntity)
 
+
     def isPredator(self):
         return self.canKill
+
 
     def move(self, moveDirection):
         game_map = world_module.World.getMap()
@@ -43,6 +47,7 @@ class Animal(Entity):
         if game_map.getEntityAt(targetPos) is None:
             game_map.move(self.position, targetPos)
             self.position = targetPos
+
 
     def runAway(self):
         game_map = world_module.World.getMap()

@@ -8,6 +8,7 @@ class Guarana(Plant):
         else:
             super().__init__(0, position_or_data, "guarana", age)
 
+
     def collision(self, otherEntity):
         otherEntity.setPower(otherEntity.getPower() + 3)
         super().collision(otherEntity)

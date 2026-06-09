@@ -8,7 +8,7 @@ class CyberSheep(Animal):
     def __init__(self, position_or_data, power=10, age=0):
         if isinstance(position_or_data, dict):
             super().__init__(
-                int(position_or_data.get("power", 0)),
+                int(position_or_data.get("power", 10)),
                 4,
                 Vector2(position_or_data.get("position")),
                 "Cyber Sheep",
@@ -32,5 +32,6 @@ class CyberSheep(Animal):
         if closest is not None:
             moveDirection = map.getMoveDirectionTowards(self.position, closest.position)
             self.move(moveDirection)
+            self.age += 1
         else:
             super().action()

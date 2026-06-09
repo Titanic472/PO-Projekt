@@ -7,7 +7,6 @@ class Main:
     def main():
         world = World(Config.HEX_ENABLED)
 
-
         # mainloop
         while True:
             world.drawWorld()

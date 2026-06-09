@@ -10,6 +10,7 @@ class Milkweed(Plant):
         else:
             super().__init__(0, position_or_data, "milkweed", age)
 
+
     def action(self):
         # three reproduce attempts
         for _ in range(2):

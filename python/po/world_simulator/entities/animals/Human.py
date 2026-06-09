@@ -10,7 +10,7 @@ class Human(Animal):
     def __init__(self, position_or_data, power=5, age=0, abilityCooldown=0):
         if isinstance(position_or_data, dict):
             super().__init__(
-                int(position_or_data.get("power", 0)),
+                int(position_or_data.get("power", 5)),
                 4,
                 Vector2(position_or_data.get("position")),
                 "Human",
@@ -27,14 +27,17 @@ class Human(Animal):
 
         Human.instance = self
 
+
     @staticmethod
     def getInstance():
         return Human.instance
+
 
     def dispose(self):
         if Human.instance == self:
             Human.instance = None
         super().dispose()
+
 
     def action(self):
         if self.abilityCooldown > 0:
@@ -61,6 +64,7 @@ class Human(Animal):
         # if(age == 90) cout << "moje plecy!";
         self.age += 1
 
+
     def collision(self, otherEntity):
         # ability handle before turn if collision happened
         if world_module.World.getInputManager().getLastInput() == Config.ABILITY and self.abilityCooldown == 0:
@@ -73,14 +77,17 @@ class Human(Animal):
 
         super().collision(otherEntity)
 
+
     def getAbilityCooldown(self):
         return self.abilityCooldown
+
 
     def kill(self):
         if self.abilityCooldown > 5:
             return
         world_module.World.getRenderer().addToLog("Human died at age " + str(self.age))
         super().kill()
+
 
     def saveAsString(self, parser):
         data = super().saveAsString(parser)
