@@ -138,6 +138,7 @@ class World:
         self.nextQueue()
         return True
 
+
     def drawWorld(self):
         self.renderer.drawMap(self.worldSize)
 

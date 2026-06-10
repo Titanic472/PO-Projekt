@@ -3,7 +3,7 @@ from .Config import Config
 
 class InputManager:
     def __init__(self):
-        self.lastInput = 0
+        self.lastInput = ""
         self.newTurnPressed = False
         self.inputQueue = queue.Queue()
 

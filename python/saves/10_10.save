@@ -1,0 +1,15 @@
+world_size:v2:10_10;
+hex_mode:b:false;
+entities:{
+Wolf:{
+position:v2:6_5;
+age:i:0;
+power:i:9;
+}
+Human:{
+position:v2:5_5;
+age:i:0;
+power:i:5;
+abilityCooldown:i:0;
+}
+}

@@ -26,15 +26,15 @@ class Config:
 
     PLANTS_SPREAD_CHANCE = 5
 
-    QUIT = ord('q')
-    LEFT = 255 + 68
-    RIGHT = 255 + 67
-    UP = 255 + 65
-    DOWN = 255 + 66
-    ABILITY = ord('e')
-    NEW_TURN = ord('n')
-    SAVE = ord('s')
-    LOAD = ord('l')
+    QUIT = 'q'
+    LEFT = 'left'
+    RIGHT = 'right'
+    UP = 'up'
+    DOWN = 'down'
+    ABILITY = 'e'
+    NEW_TURN = 'n'
+    SAVE = 's'
+    LOAD = 'l'
 
     # renderer config
     MAX_LOG_MESSAGES = 100

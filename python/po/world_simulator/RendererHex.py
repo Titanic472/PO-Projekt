@@ -10,7 +10,7 @@ class RendererHex(Renderer):
     def __init__(self, mapSize):
         super().__init__(mapSize)
 
-        # [AI] Remove grid layout map panel from original renderer and replace with canvas
+        # Remove grid layout map panel from original renderer and replace with canvas
         self.mapPanel.destroy()
 
         self.hexGrid = [[' ' for _ in range(mapSize.x)] for _ in range(mapSize.y)]
@@ -26,24 +26,28 @@ class RendererHex(Renderer):
 
         self.frame.update()
 
+
     def drawCharAt(self, position, text):
         if 0 <= position.y < len(self.hexGrid) and 0 <= position.x < len(self.hexGrid[0]):
             self.hexGrid[position.y][position.x] = text
+
 
     def drawMap(self, mapSize_obj):
         for y in range(self.mapSize.y):
             for x in range(self.mapSize.x):
                 self.hexGrid[y][x] = ' '
 
+
     def renderMap(self):
         self.draw_hexes()
         self.frame.update()
 
+
     def on_resize(self, event):
         self.draw_hexes()
 
+
     def on_click(self, event):
-        # [AI] Very simple bounding box check assuming point in polygon. Using approximate center distance for clicks since it's easier in tkinter
         clicked_pos = None
         min_dist = float('inf')
 
@@ -58,6 +62,7 @@ class RendererHex(Renderer):
 
         if clicked_pos is not None:
             self.showAddEntityDialog(clicked_pos)
+
 
     def draw_hexes(self):
         self.hexMapCanvas.delete("all")
@@ -109,6 +114,7 @@ class RendererHex(Renderer):
                 if c != ' ' and c != '\0':
                     self.hexMapCanvas.create_text(cx, cy, text=c, fill=get_hex_color(Config.TEXT_COLOR),
                                                   font=("Courier", fontSize, "bold"))
+
 
     def createHexagon(self, x, y, size):
         points = []

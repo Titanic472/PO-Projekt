@@ -7,7 +7,7 @@ from po.world_simulator.Vector2 import Vector2
 import po.world_simulator.World as world_module
 from po.world_simulator.entities.animals.Human import Human
 
-# [AI] Helper function to convert our custom Color class to tkinter hex colors
+# Helper function to convert custom Color class to tkinter hex colors
 def get_hex_color(color):
     return f"#{color.r:02x}{color.g:02x}{color.b:02x}"
 
@@ -34,7 +34,7 @@ class Renderer:
 
         self.gridLabels = [[None for _ in range(mapSize.x)] for _ in range(mapSize.y)]
 
-        # [AI] Tkinter grid configuration to make cells expand equally
+        # Tkinter grid configuration to make cells expand equally
         for y in range(mapSize.y):
             self.mapPanel.rowconfigure(y, weight=1)
         for x in range(mapSize.x):
@@ -42,7 +42,7 @@ class Renderer:
 
         for y in range(mapSize.y):
             for x in range(mapSize.x):
-                # [AI] Using frame for border thickness to act as LineBorder
+                # Using frame for different border thickness
                 border_frame = tk.Frame(self.mapPanel, bg=get_hex_color(Config.BORDER_COLOR), bd=Config.BORDER_THICKNESS)
                 border_frame.grid(row=y, column=x, sticky="nsew")
 
@@ -68,7 +68,7 @@ class Renderer:
         buttonsPanel = tk.Frame(topStatusPanel)
         buttonsPanel.pack(pady=5)
 
-        # [AI] Buttons, disabling strict focus so key events still propagate to root
+        # Buttons, disabling strict focus so key events still propagate to root
         self.btnSave = tk.Button(buttonsPanel, text="Save", takefocus=False)
         self.btnSave.pack(side=tk.LEFT, padx=5)
         self.btnLoad = tk.Button(buttonsPanel, text="Load", takefocus=False)
@@ -96,14 +96,16 @@ class Renderer:
         self.logArea.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollPane.pack(side=tk.RIGHT, fill=tk.Y)
 
-        # [AI] Keep the window responsive for setup but wait for manual update calls during simulation
+        # Keep the window responsive for setup but wait for manual update calls during simulation
         self.frame.update()
 
+
     def on_close(self):
-        # [AI] Quit cleanly when clicking X
+        # Quit cleanly when clicking X
         im = world_module.World.getInputManager()
         if im is not None:
-            im.pushInput(ord('q')) # Config.QUIT
+            im.pushInput(Config.QUIT) # Config.QUIT
+
 
     def dispatchKeyEvent(self, e):
         im = world_module.World.getInputManager()
@@ -111,27 +113,12 @@ class Renderer:
             return "break"
 
         keysym = e.keysym.upper()
-        # [AI] Map tkinter keysyms to our input setup
-        if keysym == "LEFT":
-            im.pushInput(Config.LEFT)
-        elif keysym == "RIGHT":
-            im.pushInput(Config.RIGHT)
-        elif keysym == "UP":
-            im.pushInput(Config.UP)
-        elif keysym == "DOWN":
-            im.pushInput(Config.DOWN)
-        elif keysym == "E":
-            im.pushInput(ord('e'))
-        elif keysym == "N":
-            im.pushInput(ord('n'))
-        elif keysym == "S":
-            im.pushInput(ord('s'))
-        elif keysym == "L":
-            im.pushInput(ord('l'))
-        elif keysym == "Q":
-            im.pushInput(ord('q'))
+        # Map tkinter keysyms to our input setup
+        
+        im.pushInput(keysym.lower())
 
         return "break"
+
 
     def bind(self, buttonName, action):
         if buttonName.lower() == "save" or buttonName.lower() == "b1":
@@ -139,9 +126,10 @@ class Renderer:
         elif buttonName.lower() == "load" or buttonName.lower() == "b2":
             self.btnLoad.config(command=action)
 
+
     def renderMap(self):
-        # [AI] Update the GUI
         self.frame.update()
+
 
     def renderInfoWindow(self):
         button_text = "next action: "
@@ -169,22 +157,26 @@ class Renderer:
 
         self.frame.update()
 
+
     def drawCharAt(self, position, text):
         if 0 <= position.y < len(self.gridLabels) and 0 <= position.x < len(self.gridLabels[0]):
             self.gridLabels[position.y][position.x].config(text=str(text))
+
 
     def drawMap(self, mapSize):
         for y in range(mapSize.y):
             for x in range(mapSize.x):
                 self.gridLabels[y][x].config(text=" ")
 
+
     def addToLog(self, text):
-        self.logMessages.append(text)
-        if len(self.logMessages) > Config.MAX_LOG_MESSAGES:
-            self.logMessages.popleft()
+        if len(self.logMessages) <= Config.MAX_LOG_MESSAGES:
+            self.logMessages.append(text)
+
 
     def drawInfoWindow(self):
         pass
+
 
     def clearLog(self):
         self.logMessages.clear()
@@ -192,8 +184,10 @@ class Renderer:
         self.logArea.delete(1.0, tk.END)
         self.logArea.config(state=tk.DISABLED)
 
+
     def dispose(self):
         self.frame.destroy()
+
 
     def convertInputToText(self, input_val):
         if input_val == Config.LEFT:
@@ -204,9 +198,10 @@ class Renderer:
             return "UP"
         elif input_val == Config.DOWN:
             return "DOWN"
-        elif input_val == ord('e'):
+        elif input_val == Config.ABILITY:
             return "ABILITY"
         return ""
+
 
     def showAddEntityDialog(self, position):
         game_map = world_module.World.getMap()
@@ -218,7 +213,7 @@ class Renderer:
             "Grass", "Milkweed", "Guarana", "Wolfberries", "SosnowskiHogweed", "CyberSheep"
         ]
 
-        # [AI] Using custom dialog with OptionMenu to select entity
+        # Using custom dialog with OptionMenu to select entity
         dialog = tk.Toplevel(self.frame)
         dialog.title("Add Entity")
         dialog.transient(self.frame)
@@ -245,7 +240,7 @@ class Renderer:
         tk.Button(btn_frame, text="OK", command=on_ok, width=10).pack(side=tk.LEFT, padx=5)
         tk.Button(btn_frame, text="Cancel", command=on_cancel, width=10).pack(side=tk.LEFT, padx=5)
 
-        # [AI] Center the dialog relative to the main window
+        # Center the dialog relative to the main window
         dialog.update_idletasks()
         x = self.frame.winfo_x() + (self.frame.winfo_width() // 2) - (dialog.winfo_width() // 2)
         y = self.frame.winfo_y() + (self.frame.winfo_height() // 2) - (dialog.winfo_height() // 2)
@@ -254,7 +249,7 @@ class Renderer:
         self.frame.wait_window(dialog)
         selected = result[0]
 
-        # [AI] Validate selected string
+        # Validate selected string
         if selected and selected in entities_list:
             newEntity = None
             try:
